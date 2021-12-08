@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;500;700&display=swap');
+
+:root {
+	--generalfont: 'Readex Pro', sans-serif;
+	--white: #E9EBF8;
+	--black: black;
+	--bkg: #E9EBF8;
+	--bkgborder: #33006F;
+	--cardshad: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+	--cardtitle: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;;
+}
+
+body {
+	margin: none;
+	font-family: var(--generalfont);
+	background-color: var(--bkgborder);
+	color: var(--black);
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+
+#plantable td {
+	padding: 1.5vh;
+	width: 16vh;
+	height: 3vh;
+	font-size: 1.5em;
+	border: solid 1px #B4B8C5;
+	box-shadow: var(--cardshad);
+}
+
+#plantable th {
+	padding: 3vh;
+
+}
+
+#bkgtable {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--bkg);
+}
