@@ -46,6 +46,8 @@ $res=mysqli_fetch_all($req,MYSQLI_ASSOC);
 
 var_dump($res);
 
+//echo $res[0]['debut'];
+
 ?>
 			<table id="plantable">
 				<tr>
@@ -53,7 +55,7 @@ var_dump($res);
 					<th><?php   echo '<h2>'.date('l d', strtotime('-3 day')).'</h2>' ?></th>
 					<th><?php   echo '<h2>'.date('l d', strtotime('-2 day')).'</h2>'  ?></th>
 					<th><?php 	echo '<h2>'.date('l d', strtotime('-1 day')).'</h2>'  ?></th>
-					<th><?php 	echo '<h2>'.date('l d').'</h2>' ; ?></th>		<!--  today date -->
+					<th><?php 	echo '<h2><span id="today">'.date('l d').'</span></h2>' ; ?></th>		<!--  today date -->
 					<th><?php 	echo '<h2>'.date('l d', strtotime('+1 day')).'</h2>'  ?></th>
 					<th><?php 	echo '<h2>'.date('l d', strtotime('+2 day')).'</h2>'  ?></th>	
 					<th><?php 	echo '<h2>'.date('l d', strtotime('+3 day')).'</h2>'  ?></th>
@@ -63,15 +65,61 @@ var_dump($res);
 $date = getdate();		// get today date
 $wday = $date['weekday'];	//day of the week
 
+
+//function i to date to have $i formatted as H:i:s
+
+function itoh($i){	
+	$r = $i + 8;
+	if($r<10){
+		return '0'.$r.':'.'00'.':'.'00';
+	} else {
+		return $r.':'.'00'.':'.'00';
+	}
+}
+
+//function j to day to have $j formatted as Y-m-d
+
+function jtod($j){
+
+	if($j<9){
+		$j= date('Y').'-'.date('m').'-0'.$j;
+		return $j;
+	} else {
+		$j= date('Y').'-'.date('m').'-'.$j;
+	}
+}
+
+	$j=date('d');	// i assign a date to j to make it compatible and to order the column debut-fin in SQL
+	$jj=ltrim($j,0);
+echo $jj;
+
+
+// Formatting both for SQL
+
+function bothdh($j,$i){
+	$formatdate= $j.' '.$i;
+	return $formatdate;
+}
+
+
+//var_dump(bothdh(jtod($j),itoh($i)));
+
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
-		for($j=0 ;$j<=6;$j++){
+		for($j=0 ;$j<=7;$j++){
 			echo '<td>';
 			if($j==0){
 				echo $i+8;
+			} else {
+				echo bothdh(jtod($j),itoh($i));
+				echo '<form action="" method="get">';
+				if($res[0]['debut'] === (bothdh(jtod($j),itoh($i)))){
+					echo 'ok';
+				}
+				echo '<input type="submit" value="see">';
+				echo '</form>';
+				echo '</td>';
 			}
-			echo '<form action="" method="get">';
-			echo '</td>';
 		}
 	echo '</tr>';
 }

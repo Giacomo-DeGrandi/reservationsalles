@@ -13,7 +13,13 @@
 body {
 	margin: none;
 	font-family: var(--generalfont);
-	background-color: var(--bkgborder);
+	background-color: var(--white);
+	color: var(--black);
+}
+
+a {
+	text-decoration: none;
+	background-color: var(--bkg);
 	color: var(--black);
 }
 
@@ -21,7 +27,10 @@ h2 {
 	font-size: 1.2em;
 }
 
-
+#today {
+	background-color: var(--black);
+	color: var(--white);
+}
 #plantable td {
 	padding: 1.5vh;
 	width: 16vh;
@@ -33,7 +42,6 @@ h2 {
 
 #plantable th {
 	padding: 3vh;
-
 }
 
 #bkgtable {
