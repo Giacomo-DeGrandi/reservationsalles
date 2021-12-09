@@ -46,7 +46,8 @@ $res=mysqli_fetch_all($req,MYSQLI_ASSOC);
 
 var_dump($res);
 
-//echo $res[0]['debut'];
+echo $res[0]['debut'];
+echo '<br/>';
 
 ?>
 			<table id="plantable">
@@ -65,7 +66,6 @@ var_dump($res);
 $date = getdate();		// get today date
 $wday = $date['weekday'];	//day of the week
 
-
 //function i to date to have $i formatted as H:i:s
 
 function itoh($i){	
@@ -79,19 +79,16 @@ function itoh($i){
 
 //function j to day to have $j formatted as Y-m-d
 
-function jtod($j){
-
-	if($j<9){
-		$j= date('Y').'-'.date('m').'-0'.$j;
-		return $j;
+function jtod($jj){
+	$jj=$jj-1;
+	if($jj<9){
+		$jj= date('Y').'-'.date('m').'-0'.$jj;
+		return $jj;
 	} else {
-		$j= date('Y').'-'.date('m').'-'.$j;
+		$jj= date('Y').'-'.date('m').'-'.$jj;
+		return $jj;
 	}
 }
-
-	$j=date('d');	// i assign a date to j to make it compatible and to order the column debut-fin in SQL
-	$jj=ltrim($j,0);
-echo $jj;
 
 
 // Formatting both for SQL
@@ -101,17 +98,19 @@ function bothdh($j,$i){
 	return $formatdate;
 }
 
-
 //var_dump(bothdh(jtod($j),itoh($i)));
 
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
-		for($j=0 ;$j<=7;$j++){
+		$j=date('d');
+		$g=date('d', strtotime('-3 day'));
+		$g=ltrim($g,0);				//alias to count
+		for($jj=ltrim($j,0);$g<=$jj+4;$g++){
 			echo '<td>';
-			if($j==0){
+			if($g==$jj-3){
 				echo $i+8;
-			} else {
-				echo bothdh(jtod($j),itoh($i));
+			} else { 
+				echo bothdh(jtod($g),itoh($i));
 				echo '<form action="" method="get">';
 				if($res[0]['debut'] === (bothdh(jtod($j),itoh($i)))){
 					echo 'ok';
