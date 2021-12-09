@@ -10,7 +10,7 @@ ini_set('session.cache_limiter', 'private_no_expire');
 ini_set('session.hash_function', 'sha256');
 
 session_start();
-					//My security for session hijacking
+					//My securities for session hijacking
 
 ?>
 <!DOCTYPE html>
@@ -46,7 +46,6 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 			$quest= "SELECT login FROM utilisateurs WHERE login = '$login'";
 			$req=mysqli_query($conn,$quest);
 			$res=mysqli_fetch_row($req);
-
 			if($res > 0){
 				echo 'this username already exists';
 			} else {

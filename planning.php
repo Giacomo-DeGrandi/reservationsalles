@@ -58,7 +58,6 @@ $date = getdate();		// get today date
 $wday = $date['weekday'];	//day of the week
 
 //function i to date to have $i formatted as H:i:s
-
 function itoh($i){	
 	$r = $i + 8;
 	if($r<10){
@@ -67,9 +66,7 @@ function itoh($i){
 		return $r.':'.'00'.':'.'00';
 	}
 }
-
 //function j to day to have $j formatted as Y-m-d
-
 function jtod($jj){
 	$jj=$jj-1;
 	if($jj<=9){
@@ -80,14 +77,11 @@ function jtod($jj){
 		return $jj;
 	}
 }
-
 // Formatting both for SQL
-
 function bothdh($j,$i){
 	$formatdate= $j.' '.$i;
 	return $formatdate;
 }
-
 //var_dump(bothdh(jtod($g),itoh($i)));
 
 for($i=0;$i<=11;$i++){
@@ -104,19 +98,28 @@ for($i=0;$i<=11;$i++){
 				$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
 				$req=mysqli_query($conn,$quest);
 				$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
-				echo '<form action="" method="get">';
 				foreach($res as $k => $v){
-					echo $v['titre'].'<br/>';
-					echo $v['description'].'<br/>';
-					echo $v['debut'].'<br/>';
+					$id=$v['id_utilisateur'];
+					$quest2=" SELECT login FROM utilisateurs WHERE id = '$id' ";
+					$req2=mysqli_query($conn,$quest2);
+					$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
+					echo '<form action="" method="get">';
+					echo '<span class="plantabletitles"> '.$res2[0]['login'].'</span><br/>';
+					echo '<input type="submit" name="id" value="'.$v['id'].'">';
+					echo '<span class="plantabletitles"> '.$v['titre'].'</span><br/>';
+					echo '<span class="plantabletitles"> '.$v['description'].'</span><br/>';
+					echo '<span class="plantabletitles"> '.$v['debut'].'</span><br/>';
+					echo '</form>';
 				}
-				echo '<input type="submit" value="see">';
-				echo '</form>';
 				echo '</td>';
 			}
 		}
 	echo '</tr>';
 }
+if(isset($_GET['id'])){	
+	$_SESSION['reservation']=$_GET['id'];
+}
+
 
 ?>
 			</table>
