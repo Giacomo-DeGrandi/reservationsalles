@@ -40,15 +40,6 @@ $yday = $date['mday'];	//day of the month
 
 echo '<h1>'.$wday.' '.$yday.'</h1>';
 
-$quest=" SELECT * FROM reservations";
-$req=mysqli_query($conn,$quest);
-$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
-
-var_dump($res);
-
-echo $res[0]['debut'];
-echo '<br/>';
-
 ?>
 			<table id="plantable">
 				<tr>
@@ -81,7 +72,7 @@ function itoh($i){
 
 function jtod($jj){
 	$jj=$jj-1;
-	if($jj<9){
+	if($jj<=9){
 		$jj= date('Y').'-'.date('m').'-0'.$jj;
 		return $jj;
 	} else {
@@ -90,7 +81,6 @@ function jtod($jj){
 	}
 }
 
-
 // Formatting both for SQL
 
 function bothdh($j,$i){
@@ -98,7 +88,7 @@ function bothdh($j,$i){
 	return $formatdate;
 }
 
-//var_dump(bothdh(jtod($j),itoh($i)));
+//var_dump(bothdh(jtod($g),itoh($i)));
 
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
@@ -110,10 +100,15 @@ for($i=0;$i<=11;$i++){
 			if($g==$jj-3){
 				echo $i+8;
 			} else {
-				echo bothdh(jtod($g),itoh($i));
+				$debut=bothdh(jtod($g),itoh($i));
+				$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
+				$req=mysqli_query($conn,$quest);
+				$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
 				echo '<form action="" method="get">';
-				if($res[0]['debut'] === (bothdh(jtod($j),itoh($i)))){
-					echo 'ok';
+				foreach($res as $k => $v){
+					echo $v['titre'].'<br/>';
+					echo $v['description'].'<br/>';
+					echo $v['debut'].'<br/>';
 				}
 				echo '<input type="submit" value="see">';
 				echo '</form>';
