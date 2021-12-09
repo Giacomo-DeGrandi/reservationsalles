@@ -109,7 +109,7 @@ for($i=0;$i<=11;$i++){
 			echo '<td>';
 			if($g==$jj-3){
 				echo $i+8;
-			} else { 
+			} else {
 				echo bothdh(jtod($g),itoh($i));
 				echo '<form action="" method="get">';
 				if($res[0]['debut'] === (bothdh(jtod($j),itoh($i)))){
