@@ -88,9 +88,11 @@ function bothdh($j,$i){
 }
 //var_dump(bothdh(jtod($g),itoh($i)));
 
+
+
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
-		$j=date('d');
+		$j=date('d');	// NB per cambiare settimana
 		$g=date('d', strtotime('-3 day'));
 		$g=ltrim($g,0);				//alias to count
 		for($jj=ltrim($j,0);$g<=$jj+4;$g++){
@@ -107,7 +109,7 @@ for($i=0;$i<=11;$i++){
 					$quest2=" SELECT login FROM utilisateurs WHERE id = '$id' ";
 					$req2=mysqli_query($conn,$quest2);
 					$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
-					echo '<form action="" method="get">';
+					echo '<form action="reservation.php" method="GET">';
 					echo '<span class="plantabletitles"> '.$res2[0]['login'].'</span><br/>';
 					echo '<input type="submit" name="id" value="'.$v['id'].'">';
 					echo '<span class="plantabletitles"> '.$v['titre'].'</span><br/>';
@@ -120,9 +122,9 @@ for($i=0;$i<=11;$i++){
 		}
 	echo '</tr>';
 }
+		//	 GET my session var to display reservation
 if(isset($_GET['id'])){	
 	$_SESSION['reservation']=$_GET['id'];
-	header('Location: reservation.php');
 }
 
 ?>

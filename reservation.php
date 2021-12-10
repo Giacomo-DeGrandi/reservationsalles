@@ -29,20 +29,17 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 </head>
 <body>
 	<header>
-		<a href="planning.php" target="_top"> go to the planning </a>
+			<a href="planning.php">planning</a> 
 	</header>
 	<main>
 		<table>
 <?php
 
-
+$_SESSION['reservation']=$_GET['id'];
 echo $_SESSION['reservation'];
 var_dump($_SESSION['reservation']);
+$id=$_SESSION['reservation'];
 
-
-	//$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
-	//$req=mysqli_query($conn,$quest);
-	//$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
 
 
 ?>

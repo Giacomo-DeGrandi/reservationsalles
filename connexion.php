@@ -64,7 +64,9 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 			<a href="index.php" target="_top">go back to the home page </a>
 			<br><br>
 			<a href="inscription.php" target="_top">Not subscribed yet? Subscribe </a>
-			<br>
+			<br><br>
+			<a href="planning.php" target="_top"> go to the planning </a>
+			<br><br><br><br>
 		</div>
 </main>
 	<footer>
