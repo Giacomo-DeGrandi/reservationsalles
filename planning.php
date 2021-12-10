@@ -39,8 +39,6 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 			<div id="planningtitles">
 <?php
 
-
-
 $date = getdate();		// get today date
 $datetemp = $date;		// save my actual date 
 
@@ -53,58 +51,57 @@ if(isset($_POST['calendar'])){
 		//$date = $datealias; //create an alias 
 		$cal= $_POST['calendar'];
 		$pattern = '/[-]/i';
-		$divdays= preg_split($pattern, $cal);
-		$selyear=$divdays[0];
-		$selmonth=$divdays[1];
-		$selday=$divdays[2];
-		$jdate=$selday;		// connection to the table
-		$gdate=$divdays[2]-3;
+		$replacement = '/';
+		$dayss= preg_replace($pattern, $replacement, $cal);
+		$cal= $dayss.' 00:00:00';
+		$day2=
+		$jdate= date('d',strtotime($cal));
+		$gdate= date('d',strtotime($cal.'-3 days'));
 	}
+} else {
+		$cal= 'today';
+	$jdate= date('d');
+	$gdate= date('d',strtotime('-3 days'));
 }
+
 
 // TODAY
 
-$wday = $date['weekday'];	//day of the week
-$yday = $date['mday'];	//day of the month
-
-echo '<h1>'.$wday.' '.$yday.'</h1>';
-
+$wday = date('l d',strtotime($cal));	//day of the week
+echo '<h1>'.$wday.'</h1>';
 
 ?>
 			</div>
 			<table id="plantable">
 				<tr>
 					<th>&#160;&#160;&#160;&#160;&#160;</th>
-					<th><?php   echo '<h2>'.date('l d', strtotime('-3 day')).'</h2>' ?></th>
-					<th><?php   echo '<h2>'.date('l d', strtotime('-2 day')).'</h2>'  ?></th>
-					<th><?php 	echo '<h2>'.date('l d', strtotime('-1 day')).'</h2>'  ?></th>
-					<th><?php 	echo '<h2><span id="today">'.date('l d').'</span></h2>' ; ?></th>		<!--  today date -->
-					<th><?php 	echo '<h2>'.date('l d', strtotime('+1 day')).'</h2>'  ?></th>
-					<th><?php 	echo '<h2>'.date('l d', strtotime('+2 day')).'</h2>'  ?></th>	
-					<th><?php 	echo '<h2>'.date('l d', strtotime('+3 day')).'</h2>'  ?></th>
+					<th><?php   echo '<h2>'.date('l d',strtotime($cal .'-3 days')).'</h2>' ?></th>
+					<th><?php   echo '<h2>'.date('l d',strtotime($cal .'-2 days')).'</h2>'  ?></th>
+					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'-1 days')).'</h2>'  ?></th>
+					<th><?php 	echo '<h2><span id="today">'.date('l d',strtotime($cal)).'</span></h2>' ; ?></th>		<!--  today date -->
+					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'+1 days')).'</h2>'  ?></th>
+					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'+2 days')).'</h2>'  ?></th>	
+					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'+3 days')).'</h2>'  ?></th>
 				</tr>
 <?php
-
-$date = getdate();		// get today date
-$wday = $date['weekday'];	//day of the week
 
 //function i to date to have $i formatted as H:i:s
 function itoh($i){	
 	$r = $i + 8;
 	if($r<10){
-		return '0'.$r.':'.'00'.':'.'00';
+		return '0'.$r.':00:00';
 	} else {
-		return $r.':'.'00'.':'.'00';
+		return $r.':00:00';
 	}
 }
 //function j to day to have $j formatted as Y-m-d
-function jtod($jj){
+function jtod($jj,$cal){
 	$jj=$jj-1;
 	if($jj<=9){
-		$jj= date('Y').'-'.date('m').'-0'.$jj;
+		$jj= date('Y',strtotime($cal)).'-'.date('m',strtotime($cal)).'-0'.$jj;
 		return $jj;
 	} else {
-		$jj= date('Y').'-'.date('m').'-'.$jj;
+		$jj= date('Y',strtotime($cal)).'-'.date('m',strtotime($cal)).'-'.$jj;
 		return $jj;
 	}
 }
@@ -117,7 +114,7 @@ function bothdh($j,$i){
 
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
-		$j=$jdate;	// NB per cambiare settimana
+		$j=$jdate;	// NB per cambiare giorno
 		$g=$gdate;
 		$g=ltrim($g,0);				//alias to count
 		for($jj=ltrim($j,0);$g<=$jj+4;$g++){
@@ -127,7 +124,7 @@ for($i=0;$i<=11;$i++){
 				echo $i+8;
 				echo 'h';
 			} else {
-				$debut=bothdh(jtod($g),itoh($i));
+				$debut=bothdh(jtod($g,$cal),itoh($i));
 				$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
 				$req=mysqli_query($conn,$quest);
 				$res=mysqli_fetch_all($req,MYSQLI_ASSOC);

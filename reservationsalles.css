@@ -50,7 +50,13 @@ input {
 	border: none;
 	cursor: pointer;
 	font-family: var(--generalfont);
-			box-shadow: var(--cardshad);
+	box-shadow: var(--cardshad);
+	line-height: 0.4em;
+}
+input:hover {
+	background-color: var(--slateblu);
+	font-family: var(--generalfont);
+	box-shadow: var(--othershad);
 }
 
 a:hover {
