@@ -6,11 +6,15 @@ ini_set('session.use_strict_mode', 1);
 ini_set('session.cookie_httponly', 1);
 ini_set('session.cookie_secure', 0);
 ini_set('session.use_trans_sid', 0);
-ini_set('session.cache_limiter', 'private_no_expire');
+//ini_set('session.cache_limiter', 'private_no_expire');
 ini_set('session.hash_function', 'sha256');
 
 session_start();
-					//My security for session hijacking
+//	My security for session hijacking
+//	 GET my session var to display reservation
+if(isset($_GET['id'])){	
+	$_SESSION['reservation']=$_GET['id'];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +29,7 @@ session_start();
 	<form action="" method="post">
 		<input type="text" name="login" placeholder="login" required>
 		<input type="password" name="password" placeholder="password" required>
-		<input type="submit" name="enter">
+		<input type="submit" name="enter" value="enter">
 	</form>
 <?php
 
@@ -48,7 +52,7 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 			if(password_verify($_POST['password'], $res[1])){
 
 				$_SESSION['id'] = $res[2];
-				$_SESSION['connected'] = $login;
+				setcookie('connected',$login ,time() +3600);
 				header("Location: profil.php");
 
 			} else { echo 'wrong password'; }

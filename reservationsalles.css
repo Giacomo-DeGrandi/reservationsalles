@@ -1,20 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,600&display=swap');
 
 :root {
-	--generalfont: 'Readex Pro', sans-serif;
+	--generalfont: 'Source Sans Pro', sans-serif;
 	--white: #E9EBF8;
 	--black: black;
-	--bkg: #E9EBF8;
-	--bkgborder: #33006F;
-	--cardshad: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-	--cardtitle: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;;
+	--fontcolw: #FEFFFE;
+	--bkg: #28242E;
+	--bkgborder: #50485B;
+	--bittered: #28242E;
+	--yellored: #FABC3C;
+	--cardshad: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.46) 0px 1px 2px 0px;
+	--othershad: rgba(0, 0, 0, 0.36) 0px 1px 4px;
+	--cardtitle: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 }
 
 body {
 	margin: none;
 	font-family: var(--generalfont);
-	background-color: var(--white);
-	color: var(--black);
+	background-color: var(--bittered);
+	color: var(--yellored);
 }
 
 header {
@@ -27,17 +31,37 @@ header a{
 
 a {
 	text-decoration: none;
-	background-color: var(--bkg);
-	color: var(--black);
+	background-color: var(--bittered);
+	border-radius: 4vh;
+	padding: 0.8vh;
+	color: var(--white);
+	box-shadow: var(--cardshad);
+}
+
+input {
+	text-decoration: none;
+	background-color: var(--yellored);
+	border-radius: 4vh;
+	padding: 0.8vh;
+	color: var(--bittered);
+	border: none;
+	cursor: pointer;
+	font-family: var(--generalfont);
+			box-shadow: var(--cardshad);
 }
 
 a:hover {
-	background-color: var(--black);
-	color: var(--white);
+	background-color: var(--white);
+	color: var(--black);
+}
+
+h1 {
+	color: var(--yellored);
 }
 
 h2 {
-	font-size: 1.2em;
+	font-size: 1em;
+	line-height: 0.4em;
 }
 
 #today {
@@ -46,20 +70,38 @@ h2 {
 }
 #plantable td {
 	padding: 0.2vh;
-	width: 22.5vh;
-	height: 10vh;
-	font-size: 1.5em;
-	border: solid 1px #B4B8C5;
-	box-shadow: var(--cardshad);
+	width: 23vh;
+	height: 6vh;
+	font-size: 1.1em;
 	line-height: 0.4em;
+		box-shadow: var(--othershad);
+}
+#plantable td:hover {
+	padding: 0.5vh;
+	width: 23vh;
+	height: 6vh;
+	font-size: 1.2em;
+	background-color: var(--white);
+	color: var(--bittered);
+	line-height: 0.4em;
+	transition: 0.5s;
+	box-shadow: var(--othershad);
+}
+#plantable th {
+	text-align: center;
+	background-color: #28242E;
+	height: 1vh;
+	color: var(--fontcolw);
 }
 #plantable {
 	text-align: center;
+	border: none;
 }
 
 .plantabletitles {
 	font-size: 0.5em;
 	padding: 0.2vh;
+	border-radius: 1vh;
 	box-shadow: var(--cardshad);
 }
 
@@ -73,4 +115,10 @@ h2 {
 	justify-content: center;
 	align-items: center;
 	background-color: var(--bkg);
+}
+
+footer {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
 }

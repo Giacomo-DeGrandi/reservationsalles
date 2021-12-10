@@ -6,7 +6,7 @@ ini_set('session.use_strict_mode', 1);
 ini_set('session.cookie_httponly', 1);
 ini_set('session.cookie_secure', 0);
 ini_set('session.use_trans_sid', 0);
-ini_set('session.cache_limiter', 'private_no_expire');
+//ini_set('session.cache_limiter', 'private_no_expire');
 ini_set('session.hash_function', 'sha256');
 
 session_start();
@@ -43,6 +43,7 @@ $wday = $date['weekday'];	//day of the week
 $yday = $date['mday'];	//day of the month
 
 echo '<h1>'.$wday.' '.$yday.'</h1>';
+
 
 ?>
 			<table id="plantable">
@@ -110,11 +111,10 @@ for($i=0;$i<=11;$i++){
 					$req2=mysqli_query($conn,$quest2);
 					$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
 					echo '<form action="reservation.php" method="GET">';
-					echo '<span class="plantabletitles"> '.$res2[0]['login'].'</span><br/>';
-					echo '<input type="submit" name="id" value="'.$v['id'].'">';
-					echo '<span class="plantabletitles"> '.$v['titre'].'</span><br/>';
-					echo '<span class="plantabletitles"> '.$v['description'].'</span><br/>';
-					echo '<span class="plantabletitles"> '.$v['debut'].'</span><br/>';
+					echo '<span class="plantabletitles"> '.$res2[0]['login'].'</span>';
+					echo '<input type="submit" name="id" value="'.$v['id'].'"><br/>';
+					echo '<span class="plantabletitles"> '.$v['titre'].'</span>';
+					echo '<span class="plantabletitles"> '.$v['description'].'</span>';
 					echo '</form>';
 				}
 				echo '</td>';
@@ -122,8 +122,8 @@ for($i=0;$i<=11;$i++){
 		}
 	echo '</tr>';
 }
-		//	 GET my session var to display reservation
-if(isset($_GET['id'])){	
+
+if(isset($_GET['id'])){
 	$_SESSION['reservation']=$_GET['id'];
 }
 
