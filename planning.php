@@ -29,6 +29,10 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 </head>
 <body>
 	<header>
+			<a href="inscription.php" target="_top">SIGN UP </a> 
+			<br><br>
+			<a href="connexion.php" target="_top">LOG IN</a>
+			<br><br>
 	</header>
 	<main>
 		<div id="bkgtable">
@@ -118,12 +122,13 @@ for($i=0;$i<=11;$i++){
 }
 if(isset($_GET['id'])){	
 	$_SESSION['reservation']=$_GET['id'];
+	header('Location: reservation.php');
 }
-
 
 ?>
 			</table>
 		</div>
+
 	</main>
 	<footer>
 			<p>giditree<p> 

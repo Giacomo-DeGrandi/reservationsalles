@@ -11,11 +11,10 @@ session_start();
 </head>
 <body>
 	<header>
+			<a href="planning.php" target="_top"> go to the planning </a>
+			<a href="index.php" target="_top">go back to the home page </a>
 	</header>
 	<main>
-			<br><br><br><br><br>
-			<a href="index.php" target="_top">go back to the home page </a>
-			<br><br>
 	</main>
 	<footer>
 			<p>giditree<p> 

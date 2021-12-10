@@ -17,10 +17,23 @@ body {
 	color: var(--black);
 }
 
+header {
+	display: flex;
+}
+
+header a{
+	margin-left: 2vh;
+}
+
 a {
 	text-decoration: none;
 	background-color: var(--bkg);
 	color: var(--black);
+}
+
+a:hover {
+	background-color: var(--black);
+	color: var(--white);
 }
 
 h2 {

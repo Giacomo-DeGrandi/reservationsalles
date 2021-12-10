@@ -34,10 +34,10 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 	<main>
 		<table>
 <?php
-$_SESSION['reservation']=$_GET['id'];
+
 
 echo $_SESSION['reservation'];
-
+var_dump($_SESSION['reservation']);
 
 
 	//$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
