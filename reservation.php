@@ -35,7 +35,8 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 			</form>
 	</header>
 	<main>
-		<table>
+		<div id="reserdiv">
+			<table>
 <?php
 
 $_SESSION['reservation']=$_GET['id'];
@@ -45,13 +46,16 @@ if(isset($_POST['disconnect'])){
 	header('Location: planning.php');
 }
 if(isset($_COOKIE['connected'])){
-	echo 'connected';
 	if(isset($_SESSION['reservation'])){
 		$id=$_SESSION['reservation'];
-		$quest2=" SELECT login FROM utilisateurs WHERE id = '$id' ";
+		$quest2=" SELECT * FROM reservations WHERE id = '$id' ";
 		$req2=mysqli_query($conn,$quest2);
 		$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
-		var_dump($res2);
+		echo '<span class="idreserve">id reservation: '.$res2[0]['id'].'</span>';
+		echo '<h1>'.$res2[0]['titre'].'</h1>';
+		echo '<h3>'.$res2[0]['description'].'</h3>';
+		echo '<span class="idreserve">'.'debut: '.substr($res2[0]['debut'],10).'</span>';
+		echo '<span class="idreserve">'.'fin: '.substr($res2[0]['fin'],10).'</span>';
 
 	} else { echo 'no reserve id, contact support <a href="https://github.com/Giacomo-DeGrandi">here</a>';}
 } else { echo '<h2>please, log in to see the event</h2>';
@@ -71,7 +75,8 @@ if(isset($_COOKIE['connected'])){
 }*/
 
 ?>
-		</table>
+			</table>
+		</div>
 	</main>
 	<footer>
 			<p>giditree<p> 

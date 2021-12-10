@@ -12,6 +12,8 @@
 	<main id='index'>	
 		<div id="indextitles">
 			<h1> Hi! Welcome to RoomPlan</h1><br>
+			<br>
+			<h2>Live now from the studio</h2>
 			<a href="inscription.php" target="_top">SIGN UP </a> 
 			<br><br>
 			<a href="connexion.php" target="_top">LOG IN</a>

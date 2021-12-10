@@ -36,9 +36,34 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 	</header>
 	<main>
 		<div id="bkgtable">
+			<div id="planningtitles">
 <?php
 
+
+
 $date = getdate();		// get today date
+$datetemp = $date;		// save my actual date 
+
+// QUEST FOR DATE
+
+echo '<h4>go to date:</h4><form action="" method="post"><input type="date" name="calendar"><input type="submit" id="searchdate" name="searchdate" value="search"></form>';
+
+if(isset($_POST['calendar'])){
+	if(isset($_POST['searchdate'])){
+		//$date = $datealias; //create an alias 
+		$cal= $_POST['calendar'];
+		$pattern = '/[-]/i';
+		$divdays= preg_split($pattern, $cal);
+		$selyear=$divdays[0];
+		$selmonth=$divdays[1];
+		$selday=$divdays[2];
+		$jdate=$selday;		// connection to the table
+		$gdate=$divdays[2]-3;
+	}
+}
+
+// TODAY
+
 $wday = $date['weekday'];	//day of the week
 $yday = $date['mday'];	//day of the month
 
@@ -46,6 +71,7 @@ echo '<h1>'.$wday.' '.$yday.'</h1>';
 
 
 ?>
+			</div>
 			<table id="plantable">
 				<tr>
 					<th>&#160;&#160;&#160;&#160;&#160;</th>
@@ -89,17 +115,17 @@ function bothdh($j,$i){
 }
 //var_dump(bothdh(jtod($g),itoh($i)));
 
-
-
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
-		$j=date('d');	// NB per cambiare settimana
-		$g=date('d', strtotime('-3 day'));
+		$j=$jdate;	// NB per cambiare settimana
+		$g=$gdate;
 		$g=ltrim($g,0);				//alias to count
 		for($jj=ltrim($j,0);$g<=$jj+4;$g++){
 			echo '<td>';
 			if($g==$jj-3){
+				echo '&#160;&#160;&#160;';
 				echo $i+8;
+				echo 'h';
 			} else {
 				$debut=bothdh(jtod($g),itoh($i));
 				$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
@@ -112,7 +138,7 @@ for($i=0;$i<=11;$i++){
 					$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
 					echo '<form action="reservation.php" method="GET">';
 					echo '<span class="plantabletitles"> '.$res2[0]['login'].'</span>';
-					echo '<input type="submit" name="id" value="'.$v['id'].'"><br/>';
+					echo '<input type="submit" class="subid" name="id" value="'.$v['id'].'"><br/>';
 					echo '<span class="plantabletitles"> '.$v['titre'].'</span>';
 					echo '<span class="plantabletitles"> '.$v['description'].'</span>';
 					echo '</form>';
