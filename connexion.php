@@ -25,12 +25,14 @@ if(isset($_GET['id'])){
 	<link rel="stylesheet" type="text/css" href="reservationsalles.css">
 </head>
 <body>
-<main>
-	<form action="" method="post">
-		<input type="text" name="login" placeholder="login" required>
-		<input type="password" name="password" placeholder="password" required>
-		<input type="submit" name="enter" value="enter">
-	</form>
+<main class="maininsc">
+	<div class="inscform">
+	<h1>Log In</h1>
+		<form action="" method="post">
+			<input type="text" name="login" placeholder="login" required><br><br>
+			<input type="password" name="password" placeholder="password" required><br><br>
+			<input type="submit" name="enter" value="enter">
+		</form>
 <?php
 
 $servername = 'localhost';
@@ -63,15 +65,17 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 		echo 'Hi! '.$_SESSION['newsubscriber'].' please enter your details to connect';
 	}
 ?>
+
 		<div class="downlinks">
 			<br><br><br><br><br>
-			<a href="index.php" target="_top">go back to the home page </a>
+			<a href="index.php" target="_top">go to the home page </a>
 			<br><br>
 			<a href="inscription.php" target="_top">Not subscribed yet? Subscribe </a>
 			<br><br>
 			<a href="planning.php" target="_top"> go to the planning </a>
-			<br><br><br><br>
+			<br><br>
 		</div>
+	</div>
 </main>
 	<footer>
 			<p>giditree<p> 

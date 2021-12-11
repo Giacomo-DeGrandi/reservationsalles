@@ -34,7 +34,7 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 				<input type="submit" name="disconnect" value="disconnect">
 			</form>
 	</header>
-	<main>
+	<main class="maininsc">
 		<div id="reserdiv">
 			<table>
 <?php
@@ -58,8 +58,8 @@ if(isset($_COOKIE['connected'])){
 		echo '<span class="idreserve">'.'fin: '.substr($res2[0]['fin'],10).'</span>';
 
 	} else { echo 'no reserve id, contact support <a href="https://github.com/Giacomo-DeGrandi">here</a>';}
-} else { echo '<h2>please, log in to see the event</h2>';
-		 echo '<a href="connexion.php" target="_top"> Log in </a>';
+} else { echo '<span>&#160;</span><h2>please, log in to see this event</h2>';
+		 echo '<span>&#160;</span><a href="connexion.php" target="_top"> Log in </a><span>&#160;</span>';
 }
 	/*
 	if(isset($_SESSION['reservation'])){

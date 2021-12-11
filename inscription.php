@@ -22,13 +22,15 @@ session_start();
 	<link rel="stylesheet" type="text/css" href="reservationsalles.css">
 </head>
 <body>
-<main>
-	<form action="" method="post">
-		<input type="text" name="login" placeholder="login" required>
-		<input type="password" name="password" placeholder="password" required>
-		<input type="password" name="passwordconf" placeholder="confirm_password" required>
-		<input type="submit" name="subscribe" value="subscribe">
-	</form>
+<main class="maininsc">
+	<div class="inscform">
+		<h1>Subscribe</h1>
+		<form action="" method="post">
+			<input type="text" name="login" placeholder="login" required><br><br>
+			<input type="password" name="password" placeholder="password" required><br><br>
+			<input type="password" name="passwordconf" placeholder="confirm_password" required><br><br>
+			<input type="submit" name="subscribe" value="subscribe">
+		</form>
 <?php 
 $servername = 'localhost';
 $username = 'root';
@@ -64,12 +66,15 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 
 ?>
 		<div class="downlinks">
-			<br><br><br><br><br>
-			<a href="index.php" target="_top">go back to the home page </a>
+			<br><br><br><br>
+			<a href="index.php" target="_top">go to the home page </a>
 			<br><br>
 			<a href="connexion.php" target="_top">Already Signed Up? Log in </a>
-			<br>
+			<br><br>
+			<a href="planning.php" target="_top"> go to the planning </a>
+			<br><br>
 		</div>
+	</div>
 </main>
 	<footer>
 			<p>giditree<p> 

@@ -28,7 +28,9 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 	<link rel="stylesheet" type="text/css" href="reservationsalles.css">
 </head>
 <body>
-	<header>
+	<header><br><br>
+			<a href="index.php" target="_top">go to the home page </a>
+			<br><br>
 			<a href="inscription.php" target="_top">SIGN UP </a> 
 			<br><br>
 			<a href="connexion.php" target="_top">LOG IN</a>
@@ -134,10 +136,11 @@ for($i=0;$i<=11;$i++){
 					$req2=mysqli_query($conn,$quest2);
 					$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
 					echo '<form action="reservation.php" method="GET">';
-					echo '<span class="plantabletitles"> '.$res2[0]['login'].'</span>';
-					echo '<input type="submit" class="subid" name="id" value="'.$v['id'].'"><br/>';
-					echo '<span class="plantabletitles"> '.$v['titre'].'</span>';
+					echo '<button type="submit" class="subid" name="id" value="'.$v['id'].'"><br/>';
+					echo '<span id="plantabletitles1">'.$res2[0]['login'].'</span>';
+					echo '<span class="plantabletitles"> '.substr($v['titre'],0,10).'...';'</span>';
 					echo '<span class="plantabletitles"> '.$v['description'].'</span>';
+					echo '</button>';
 					echo '</form>';
 				}
 				echo '</td>';
