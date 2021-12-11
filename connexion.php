@@ -53,7 +53,8 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 		if($res > 0){
 			if(password_verify($_POST['password'], $res[1])){
 
-				$_SESSION['id'] = $res[2];
+				$id = $res[2];
+				setcookie('id',$id ,time() +3600);
 				setcookie('connected',$login ,time() +3600);
 				header("Location: profil.php");
 

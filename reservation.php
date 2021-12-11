@@ -31,8 +31,9 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 	<header>
 			<a href="planning.php">go back to the planning</a> 
 			<form action=""	method="post">
-				<input type="submit" name="disconnect" value="disconnect">
+				<input type="submit" name="disconnect"  id="disconnect" value="disconnect">
 			</form>
+			<a href="profil.php" target="_top">Go to your profile</a>
 	</header>
 	<main class="maininsc">
 		<div id="reserdiv">
@@ -42,9 +43,13 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 $_SESSION['reservation']=$_GET['id'];
 
 if(isset($_POST['disconnect'])){
-	setcookie('connected',$login,time() -3600);
+	$logincookie=$_COOKIE['connected'];
+	$idcookie=$_COOKIE['id'];
+	setcookie('id',$idcookie,time() -3600);
+	setcookie('connected',$logincookie,time() -3600);
 	header('Location: planning.php');
 }
+
 if(isset($_COOKIE['connected'])){
 	if(isset($_SESSION['reservation'])){
 		$id=$_SESSION['reservation'];

@@ -34,7 +34,26 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 			<a href="inscription.php" target="_top">SIGN UP </a> 
 			<br><br>
 			<a href="connexion.php" target="_top">LOG IN</a>
-			<br><br>
+			<br><br><br><br>
+<?php
+
+if(isset($_COOKIE['connected'])){
+	echo '<form action=""	method="post" >
+				<input type="submit" name="disconnect" id="disconnect" value="disconnect">
+			</form>';
+	echo '<a href="profil.php" target="_top">Go to your profile</a>';
+
+}
+
+if(isset($_POST['disconnect'])){
+	$logincookie=$_COOKIE['connected'];
+	$idcookie=$_COOKIE['id'];
+	setcookie('id',$idcookie,time() -3600);
+	setcookie('connected',$logincookie,time() -3600);
+	header('Location: planning.php');
+}
+
+?>
 	</header>
 	<main>
 		<div id="bkgtable">
@@ -135,13 +154,15 @@ for($i=0;$i<=11;$i++){
 					$quest2=" SELECT login FROM utilisateurs WHERE id = '$id' ";
 					$req2=mysqli_query($conn,$quest2);
 					$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
+					echo '<div class="scrolldiv1">';
 					echo '<form action="reservation.php" method="GET">';
 					echo '<button type="submit" class="subid" name="id" value="'.$v['id'].'"><br/>';
-					echo '<span id="plantabletitles1">'.$res2[0]['login'].'</span>';
+					echo '<span id="plantabletitles1">'.$res2[0]['login'].'</span><br/>';
 					echo '<span class="plantabletitles"> '.substr($v['titre'],0,10).'...';'</span>';
 					echo '<span class="plantabletitles"> '.$v['description'].'</span>';
 					echo '</button>';
 					echo '</form>';
+					echo '</div>';
 				}
 				echo '</td>';
 			}

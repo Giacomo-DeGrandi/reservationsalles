@@ -13,6 +13,8 @@
 	--colblu: #2584BB;
 	--greeny: #00CC66;
 	--rose: #D90368;
+	--orange:  #F75C03;
+	--red: #F71735;
 	--cardshad: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.46) 0px 1px 2px 0px;
 	--othershad: rgba(0, 0, 0, 0.36) 0px 1px 4px;
 	--cardtitle: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
@@ -30,6 +32,7 @@ header {
 	display: flex;
 	background-color: var(--bkg);
 	justify-content: flex-end;
+	max-height: 5vh;
 }
 
 header a{
@@ -44,12 +47,12 @@ a {
 	padding: 0.8vh;
 	color: var(--rose);
 	box-shadow: var(--cardshad);
+	text-align: center;
 }
 
 input {
 	text-decoration: none;
 	background-color: var(--slateblu);
-	border-radius: 4vh;
 	padding: 0.8vh;
 	color: var(--white);
 	border: none;
@@ -58,6 +61,11 @@ input {
 	box-shadow: var(--cardshad);
 	line-height: 0.8em;
 }
+
+input[type="submit"] {
+	border-radius: 3vh;
+}
+
 input:hover {
 	background-color: var(--colblu);
 	font-family: var(--generalfont);
@@ -74,7 +82,8 @@ a:hover {
 h1 {
 	color: var(--white);
 	text-shadow: var(--titleshad);
-	padding: 2vh;
+	margin-left: 4vh;
+	line-height: 0.8em;
 }
 
 h2 {
@@ -91,23 +100,21 @@ h2 {
 }
 #plantable td {
 	margin-left: 1vh;
-	padding: 0.2vh;
 	width: 23vh;
-	height: 6vh;
+	height: 5vh;
 		max-width: 23vh;
-		max-height: 100%;
 	font-size: 1.1em;
 	line-height: 0.6em;
 	box-shadow: var(--othershad);
 }
 #plantable td:hover {
-	padding: 0.5vh;
 	width: 23vh;
 	height: 6vh;
+	padding: 0.2vh;
 	font-size: 1.2em;
 	background-color: var(--white);
 	color: var(--bittered);
-	line-height: 0.6em;
+
 	transition: 0.5s;
 	box-shadow: var(--othershad);
 }
@@ -128,14 +135,19 @@ h2 {
 
 .plantabletitles {
 	font-size: 0.7em;
-	padding: 0.2vh;
+	padding: 0.1vh;
+	line-height: 0.5em;
+	position: relative;
 }
 #plantabletitles1 {
+
 	font-size: 1em;
+	line-height: 0.5em;
 }
 
 #plantable th {
 	padding: 3vh;
+	white-space: nowrap;
 }
 
 #bkgtable {
@@ -153,6 +165,7 @@ footer {
 }
 
 .subid{
+			width: 100%;
 	font-size: 1em;
 	border: none;
 	color: var(--white);
@@ -181,6 +194,16 @@ footer {
 	color: white;
 	transition: 0.4s;
 }
+.scrolldiv1 {
+	line-height: 0.2em;
+	height: 7vh;
+	overflow: scroll;
+	-ms-overflow-style: none;  /* IE and Edge */
+  	scrollbar-width: none;  /* Firefox */
+}
+.scrolldiv1::-webkit-scrollbar {
+  display: none;
+}
 
 
 /* PAGE RESERVATION */
@@ -192,6 +215,10 @@ footer {
 	box-shadow: var(--cardshad);
 	max-width: 100%;
 		padding: 3vh;
+}
+
+#reserdiv h3 {
+	width: 70vh;
 }
 
 #reserdiv table {
@@ -206,20 +233,28 @@ footer {
 	padding: 0.6vh;
 }
 
+#disconnect {
+	margin-left: 5vh;
+	margin-top: 1vh;
+	background-color: var(--red);
+}
+
 /* INSCRIPTION */
 
 .inscform {
+	width: 40vh;
 	max-width: 100%;
 	padding: 3vh;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
+	border-radius: 1vh;
 	background-color: var(--white);
 	color: var(--white);
 	max-height: 80%;
-
 }
+
 .inscform h1{
 	color: var(--colblu);
 
@@ -231,4 +266,97 @@ footer {
 	display: flex;
 	flex-direction: column;
 	align-items:  center;
+}
+
+/* PROFIL */
+
+.scrolldiv2pro {
+	line-height: 0.2em;
+	height: 13vh;
+	width: 70%;
+	overflow: scroll;
+	-ms-overflow-style: none;  /* IE and Edge */
+  	scrollbar-width: none;  /* Firefox */
+}
+.scrolldiv2pro::-webkit-scrollbar {
+  display: none;
+}
+
+
+#wrapper1 {
+	display: flex;
+}
+
+#dateinfo {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#dateinfo2 {
+	flex: 2;
+	display: flex;
+}
+#dateinfo2 h2 {
+	color: var(--yellored);
+}
+#boxreserve {
+	text-align: justify-all;
+	flex: 5;
+	overflow: scroll;
+	height: 30vh;
+	-ms-overflow-style: none;  /* IE and Edge */
+  	scrollbar-width: none;  /* Firefox */
+}
+#boxreserve::-webkit-scrollbar {
+  display: none;
+}
+#boxreserve tr {
+	box-shadow: var(--cardshad);
+}
+#boxreserve th {
+	text-align: center;
+	padding: 0.5vh;
+	white-space: nowrap;
+}
+.scrolldiv {
+	padding: 0.3vh;
+	height: 6vh;
+	overflow: scroll;
+	-ms-overflow-style: none;  /* IE and Edge */
+  	scrollbar-width: none;  /* Firefox */
+}
+.scrolldiv::-webkit-scrollbar {
+  display: none;
+}
+
+#wrapper2 {
+	display: flex;
+}
+
+.edits {
+	text-align: center;
+	padding:0.3em ;
+	font-size: 0.8em;
+	border: none;
+	color: var(--white);
+	background-color: var(--rose);
+	border-radius: 3vh;
+	box-shadow: var(--cardshad);
+}
+
+#edithere {
+	display: none;
+	  display: flex;
+  flex-direction: column;
+}
+#edithere:target {
+	padding: 3vh;
+  display: flex;
+  flex-direction: column;
+  margin-left: 8vh;
+}
+#edithere:target input {
+	background-color: var(--white);
+	color: var(--bittered);
 }
