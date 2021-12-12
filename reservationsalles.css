@@ -9,10 +9,12 @@
 	--bkgborder: #50485B;
 	--bittered: #28242E;
 	--yellored: #FABC3C;
-	--slateblu:  #735CDD;
+	--slateblu:  #8C78E2;
+	--middleblu: #B7ABED;
 	--colblu: #2584BB;
 	--greeny: #00CC66;
 	--rose: #D90368;
+	--fuxia: #FC3692;
 	--orange:  #F75C03;
 	--red: #F71735;
 	--cardshad: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.46) 0px 1px 2px 0px;
@@ -42,6 +44,7 @@ header a{
 }
 
 a {
+	background-color: var(--bittered);
 	text-decoration: none;
 	border-radius: 4vh;
 	padding: 0.8vh;
@@ -52,9 +55,9 @@ a {
 
 input {
 	text-decoration: none;
-	background-color: var(--slateblu);
+	background-color: var(--white);
 	padding: 0.8vh;
-	color: var(--white);
+	color: var(--rose);
 	border: none;
 	cursor: pointer;
 	font-family: var(--generalfont);
@@ -67,7 +70,7 @@ input[type="submit"] {
 }
 
 input:hover {
-	background-color: var(--colblu);
+	background-color: var(--slateblu);
 	font-family: var(--generalfont);
 	box-shadow: var(--othershad);
 	color: white;
@@ -204,7 +207,10 @@ footer {
 .scrolldiv1::-webkit-scrollbar {
   display: none;
 }
-
+/*INDEX */
+#indextitles{
+	margin-left: 10vh;
+}
 
 /* PAGE RESERVATION */
 
@@ -237,6 +243,14 @@ footer {
 	margin-left: 5vh;
 	margin-top: 1vh;
 	background-color: var(--red);
+	color: var(--white);
+}
+
+#disconnect:hover {
+	margin-left: 5vh;
+	margin-top: 1vh;
+	background-color: var(--white);
+	color: var(--bittered);
 }
 
 /* INSCRIPTION */
@@ -282,6 +296,18 @@ footer {
   display: none;
 }
 
+#profilmain h1 {
+	font-size: 2em;
+	margin-left: 5vh;
+		padding: 1vh;
+		border-radius: 3vh;
+		box-shadow: var(--cardshad);
+		width: auto;
+		background-color: var(--bkgborder);
+}
+#profilmain h2{
+	margin-left: 5vh;
+}
 
 #wrapper1 {
 	display: flex;
@@ -296,12 +322,82 @@ footer {
 #dateinfo2 {
 	flex: 2;
 	display: flex;
+	flex-direction: column;
 }
 #dateinfo2 h2 {
 	color: var(--yellored);
 }
-#boxreserve {
+#dateinfo3 {
+	background-color: var(--bkgborder);
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 1vh;
+}
+#dateinfo3 h4,h5 {
+	line-height: 0.2em;
+}
+
+#dateinfo3 form {
+	padding: 1vh;
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+}
+
+#dateinfo3 textarea{
+font-family: var(--generalfont);
+}
+
+.messagespan {
+	font-size: 0.8em;
+	color: var(--white);
+}
+#messagespan1 {
+	background-color: var(--bittered);
+	font-size: 1em;
+	color: var(--white);
+	padding: 0.5vh;
+		box-shadow: var(--cardshad);
+}
+
+/* MESSAGES BOX */
+
+#boxreserve2 {
+	background-color: var(--bittered);
 	text-align: justify-all;
+	flex: 5;
+	overflow: scroll;
+	height: 30vh;
+	-ms-overflow-style: none;  /* IE and Edge */
+  	scrollbar-width: none;  /* Firefox */
+}
+#boxreserve2::-webkit-scrollbar {
+  display: none;
+}
+#space{
+	flex: 2;
+}
+#boxreserve2 table{
+	padding: 1vh;
+	flex: 5;
+}
+
+#boxreserve2 th {
+	background-color: var(--bkgborder);
+	box-shadow: var(--cardshad);
+	padding: 1vh;
+		white-space: nowrap;
+}
+
+#boxreserve2 td{
+	box-shadow: var(--cardshad);
+	padding: 1vh;
+}
+#boxreserve {
+	background-color: var(--bkgborder);
+	border-radius: 1vh;
 	flex: 5;
 	overflow: scroll;
 	height: 30vh;
@@ -315,6 +411,8 @@ footer {
 	box-shadow: var(--cardshad);
 }
 #boxreserve th {
+	margin-left: 4vh;
+	border-radius: 1vh;
 	text-align: center;
 	padding: 0.5vh;
 	white-space: nowrap;
@@ -344,19 +442,53 @@ footer {
 	border-radius: 3vh;
 	box-shadow: var(--cardshad);
 }
+.editsgreen {
+	text-align: center;
+	padding:0.3em ;
+	font-size: 0.8em;
+	border: none;
+	color: var(--white);
+	background-color: var(--greeny);
+	border-radius: 3vh;
+	box-shadow: var(--cardshad);
+}
+
+.settingsbutton {
+	width: 100%;
+	text-align: justify;
+	padding:0.3em ;
+	font-size:0.8em;
+	border: none;
+	color: var(--middleblu);
+	background-color: var(--bittered);
+	box-shadow: var(--cardshad);
+	cursor: pointer;
+}
+.settingsbutton:hover {
+	color: var(--bittered);
+	background-color: var(--white);
+	box-shadow: var(--othershad);
+	transition: 0.5s;
+}
+
+.closedit {
+	width: 100%;
+	text-align: center;
+	padding:0.3em ;
+	font-size: 0.8em;
+	border: none;
+	color: var(--white);
+	background-color: var(--red);
+	box-shadow: var(--cardshad);
+		cursor: pointer;
+}
+#dateinfo form {
+	width: 100%;
+}
 
 #edithere {
-	display: none;
-	  display: flex;
-  flex-direction: column;
-}
-#edithere:target {
-	padding: 3vh;
-  display: flex;
-  flex-direction: column;
-  margin-left: 8vh;
-}
-#edithere:target input {
-	background-color: var(--white);
-	color: var(--bittered);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
 }

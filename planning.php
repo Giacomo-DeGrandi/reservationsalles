@@ -76,15 +76,14 @@ if(isset($_POST['calendar'])){
 		$dayss= preg_replace($pattern, $replacement, $cal);
 		$cal= $dayss.' 00:00:00';
 		$day2=
-		$jdate= date('d',strtotime($cal));
+		$jdate= date('d',strtotime($cal));				//my table start values
 		$gdate= date('d',strtotime($cal.'-3 days'));
 	}
 } else {
-		$cal= 'today';
+	$cal= 'today';
 	$jdate= date('d');
 	$gdate= date('d',strtotime('-3 days'));
 }
-
 
 // TODAY
 
@@ -118,7 +117,7 @@ function itoh($i){
 //function j to day to have $j formatted as Y-m-d
 function jtod($jj,$cal){
 	$jj=$jj-1;
-	if($jj<=9){
+	if($jj<=9){		// if is less than 10 add a 0 on the left
 		$jj= date('Y',strtotime($cal)).'-'.date('m',strtotime($cal)).'-0'.$jj;
 		return $jj;
 	} else {
