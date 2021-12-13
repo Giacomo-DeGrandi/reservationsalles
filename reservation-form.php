@@ -44,9 +44,15 @@ if(isset($_POST['disconnect'])){
 ?>	
 			<a href="planning.php" target="_top"> go to the planning </a><br><br>
 			<a href="index.php" target="_top">go back to the home page </a><br><br>
-			<form action=""	method="post" >
+<?php
+if(isset($_COOKIE['connected'])){
+	echo '<form action=""	method="post" >
 				<input type="submit" name="disconnect" id="disconnect" value="disconnect">
-			</form>
+			</form>';
+	echo '<a href="profil.php" target="_top">Go to your profile</a>';
+
+}
+?>
 	</header>
 	<main>
 		<div id="reserdiv">

@@ -71,31 +71,7 @@ if(isset($_COOKIE['connected']) and isset($_COOKIE['id'])){
 				<form action="" method="post">
 					<button class="settingsbutton" name="settings"><h3>&#160;&#160;⚙️&#160;&#160;&#160;&#160;settings</h3></button>
 				</form><br>
-			</div>
-			<div id="dateinfo">
-				<form action="" method="post">
-					<button class="settingsbutton" name="messagebutton"><h3>&#160;&#160;💬&#160;&#160;&#160;&#160;send message</h3></button>
-				</form><br>
-			</div>
-						<div id="dateinfo">
-			<form action="" method="post">
-					<button class="settingsbutton" name="bookbutton"><h3>&#160;&#160;📆&#160;&#160;&#160;&#160;book an event</h3></button>
-			</form><br>
-			</div>
-		</div>
-		<div id="boxreserve">
-			<table>
-				<tr>
-					<th> your latest bookings </th>
-				</tr>
-<?php
-
-//SEND TO BOOKING FORM_______________________________________________________________________
-
-if(isset($_POST['bookbutton'])){
-	header('Location:reservation-form.php');
-}
-
+<?php 
 //UPDATE_____________________________________________________________________________________
 
 if(isset($_POST['settings'])){
@@ -137,31 +113,13 @@ if( ((isset($_POST['username']) and ($_POST['username']) != '')) and
 if(isset($_POST['closeedit'])){
 	$_POST['settings']=null;
 }
-
-
-// BOOKING TABLE_________________________________________________________________________-
-
-$id=$_COOKIE['id'];
-$quest= "SELECT id, titre, description, debut, id_utilisateur FROM reservations WHERE id_utilisateur = '$id'";
-$req=mysqli_query($conn,$quest);
-$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
-
-if(!empty($res)){
-	foreach($res as $k=>$v){
-		echo '<tr>';
-		foreach($v as $k2 => $v2){
-			if($k2 === 'id'){
-				echo '<td><form action="" method="post"><button type="submit" class="edits" name="idbookingsprofile" value="'.$v2.'">&#160;edit</button></form></td>';
-			} elseif ($k2 === 'title'){
-				echo '<td><div class="scrolldiv"><h3>'.$v2.'&#160;&#160;&#160;&#160;</h3></div></td>';
-			} else {
-				echo '<td><div class="scrolldiv">'.$v2.'&#160;&#160;&#160;&#160;</div></td>';
-			}
-		}
-		echo '</tr>';
-	}
-}
-
+?>
+			</div>
+			<div id="dateinfo">
+				<form action="" method="post">
+					<button class="settingsbutton" name="messagebutton"><h3>&#160;&#160;💬&#160;&#160;&#160;&#160;send message</h3></button>
+				</form><br>
+<?php 
 // SEND MESSAGES__________________________________________________________
 
 if(isset($_POST['messagebutton'])){
@@ -189,19 +147,23 @@ if(	(isset($_POST['user']) and !empty($_POST['user'])) and
 	(isset($_POST['texttosend']) and !empty($_POST['texttosend']))	){
 	if(isset($_POST['send_message'])){
 		$user2=htmlspecialchars($_POST['user']);
-		$user1=$_COOKIE['connected'];
-		$questexi="SELECT login FROM utilisateurs WHERE login = '$user2'";
+		$questforid="SELECT id FROM utilisateurs WHERE login = '$user2'"; // quest for id user 2
+		$reqforid=mysqli_query($conn,$questforid);
+		$resforid=mysqli_fetch_row($reqforid);
+		$user2=$resforid[0];
+		$user1=$_COOKIE['id'];
+		$questexi="SELECT id FROM utilisateurs WHERE id = '$user2'";
 		$reqexi=mysqli_query($conn,$questexi);
 		$resexi=mysqli_fetch_row($reqexi);
 		if($resexi>0){
-			$user2=mysqli_real_escape_string($conn,htmlspecialchars($_POST['user']));
+			$user2=mysqli_real_escape_string($conn,htmlspecialchars($user2));
 			$title=mysqli_real_escape_string($conn,htmlspecialchars($_POST['title']));
 			$text=mysqli_real_escape_string($conn,htmlspecialchars($_POST['texttosend']));
 			$date=date('Y-m-d H:i:s');
 			$questsend= " INSERT INTO sent  (text,user1,user2,date,title) VALUES ('$text','$user1','$user2','$date','$title') ";
 			$reqsend= mysqli_query($conn,$questsend);
 			echo '&#160;&#160;&#160; message sent';
-			header('location:profil.php');//here i redirect the user to the same page to avoid same message on refresh
+			header('location:profil.php');			//here i redirect the user to the same page to avoid same message on refresh
 		} else {
 			echo '<span class="messagespan">this user doesn\'t exists</span>';
 		}
@@ -212,13 +174,58 @@ if(isset($_POST['closeedit2'])){
 	$_POST['messagebutton']=null;
 }
 
+?>
+			</div>
+						<div id="dateinfo">
+			<form action="" method="post">
+					<button class="settingsbutton" name="bookbutton"><h3>&#160;&#160;📆&#160;&#160;&#160;&#160;book an event</h3></button>
+			</form><br>
+			</div>
+		</div>
+<?php
+
+//SEND TO BOOKING FORM_______________________________________________________________________
+
+if(isset($_POST['bookbutton'])){
+	header('Location:reservation-form.php');
+}
+?>
+
+		<div id="boxreserve">
+			<table>
+				<tr>
+					<th> your latest bookings </th>
+				</tr>
+<?php 
+
+// BOOKING TABLE_________________________________________________________________________-
+
+$id=$_COOKIE['id'];
+$quest= "SELECT id, titre, description, debut, id_utilisateur FROM reservations WHERE id_utilisateur = '$id'";
+$req=mysqli_query($conn,$quest);
+$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+
+if(!empty($res)){
+	foreach($res as $k=>$v){
+		echo '<tr>';
+		foreach($v as $k2 => $v2){
+			if($k2 === 'id'){
+				echo '<td><form action="" method="post"><button type="submit" class="edits" name="idbookingsprofile" value="'.$v2.'">&#160;edit</button></form></td>';
+			} elseif ($k2 === 'title'){
+				echo '<td><div class="scrolldiv"><h3>'.$v2.'&#160;&#160;&#160;&#160;</h3></div></td>';
+			} else {
+				echo '<td><div class="scrolldiv">'.$v2.'&#160;&#160;&#160;&#160;</div></td>';
+			}
+		}
+		echo '</tr>';
+	}
+}
+
 ?>			
 			</table>
 		</div>
 	</div>
 	<div id="wrapper2">
-		<span id="space">
-		</span>
 		<div id="boxreserve2">
 			<table id="receivedtable">
 			<tr>
@@ -228,7 +235,7 @@ if(isset($_POST['closeedit2'])){
 
 // RECEIVED TABLE____________________________________________________________________________________
 
-$user2x=$_COOKIE['connected'];
+$user2x=$_COOKIE['id'];
 $quest= "SELECT id, title, text, date, user1 FROM sent WHERE user2 = '$user2x'";
 $req=mysqli_query($conn,$quest);
 $res=mysqli_fetch_all($req,MYSQLI_ASSOC);
@@ -237,10 +244,17 @@ if(!empty($res)){
 	foreach($res as $k => $v){
 		echo '<tr>';
 		foreach($v as $k2 => $v2){
-			if($k2 === 'id'){
-				// don't do anything
-			} else {
-			echo '<td><div class="scrolldiv">'.$v2.'</div></td>';
+			if($k2 === 'user1'){
+				$iduser1=$v2;
+				$questnamer="SELECT login FROM utilisateurs WHERE id = '$iduser1'"; // quest for login user 2
+				$reqnamer=mysqli_query($conn,$questnamer);
+				$resnamer=mysqli_fetch_row($reqnamer);
+				echo '<td>'. $resnamer[0].'</td>';
+
+			}	elseif( $k2 === 'id'){
+				
+			}	else {
+				echo '<td><div class="scrolldiv">'.$v2.'</div></td>';
 			}
 		}
 		echo '</tr>';
@@ -290,8 +304,8 @@ if(!empty($res)){
 
 // SENT TABLE____________________________________________________________________________________
 
-$user2x=$_COOKIE['connected'];
-$quest= "SELECT id, title, text, date, user1 FROM sent WHERE user1 = '$user2x'";
+$user2x=$_COOKIE['id'];
+$quest= "SELECT id, title, text, date, user2 FROM sent WHERE user1 = '$user2x'";
 $req=mysqli_query($conn,$quest);
 $res=mysqli_fetch_all($req,MYSQLI_ASSOC);
 
@@ -299,10 +313,17 @@ if(!empty($res)){
 	foreach($res as $k => $v){
 		echo '<tr>';
 		foreach($v as $k2 => $v2){
-			if($k2 === 'id'){
+			if($k2 === 'user2'){
+				$iduser2=$v2;
+				$questnames="SELECT login FROM utilisateurs WHERE id = '$iduser2'"; // quest for login user 2
+				$reqnames=mysqli_query($conn,$questnames);
+				$resnames=mysqli_fetch_row($reqnames);
+				echo '<td>'. $resnames[0].'</td>';
 
-			} else {
-			echo '<td><div class="scrolldiv">'.$v2.'</div></td>';
+			}	elseif( $k2 === 'id'){
+
+			}	else {
+				echo '<td><div class="scrolldiv">'.$v2.'</div></td>';
 			}
 		}
 		echo '</tr>';

@@ -1,3 +1,18 @@
+<?php
+ini_set('session.cookie_lifetime', 0);
+ini_set('session.use_cookies', 1);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.use_strict_mode', 1);
+ini_set('session.cookie_httponly', 1);
+ini_set('session.cookie_secure', 0);
+ini_set('session.use_trans_sid', 0);
+//ini_set('session.cache_limiter', 'private_no_expire');
+ini_set('session.hash_function', 'sha256');
+
+session_start();
+					//My securities for session hijacking
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +23,15 @@
 </head>
 <body>
 	<header>
+<?php
+if(isset($_COOKIE['connected'])){
+	echo '<form action=""	method="post" >
+				<input type="submit" name="disconnect" id="disconnect" value="disconnect">
+			</form>';
+	echo '<a href="profil.php" target="_top">Go to your profile</a>';
+
+}
+?>
 	</header>
 	<main id='index'>	
 		<div id="indextitles">
