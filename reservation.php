@@ -30,17 +30,22 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 <body>
 	<header>
 			<a href="planning.php">go back to the planning</a> 
-			<form action=""	method="post">
-				<input type="submit" name="disconnect"  id="disconnect" value="disconnect">
-			</form>
-			<a href="profil.php" target="_top">Go to your profile</a>
+<?php 
+
+if(isset($_COOKIE['connected'])){
+	echo 	'<form action=""	method="post" >
+				<input type="submit" name="disconnect" id="disconnect" value="disconnect">
+			</form>';
+	echo '<a href="profil.php" target="_top">Go to your profile</a>';
+}
+
+?>
 	</header>
 	<main class="maininsc">
 		<div id="reserdiv">
-			<table>
 <?php
 
-$_SESSION['reservation']=$_GET['id'];
+$_SESSION['reservation']=$_GET['idbookingsprofile'];
 
 if(isset($_POST['disconnect'])){
 	$logincookie=$_COOKIE['connected'];
@@ -50,37 +55,38 @@ if(isset($_POST['disconnect'])){
 	header('Location: planning.php');
 }
 
+
 if(isset($_COOKIE['connected'])){
 	if(isset($_SESSION['reservation'])){
-		$id=$_SESSION['reservation'];
-		$quest2=" SELECT * FROM reservations WHERE id = '$id' ";
+		$idres=$_SESSION['reservation'];
+		$quest2=" SELECT * FROM reservations WHERE id = '$idres' ";
 		$req2=mysqli_query($conn,$quest2);
 		$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
-		echo '<span class="idreserve">id reservation: '.$res2[0]['id'].'</span>';
-		echo '<h1>'.$res2[0]['titre'].'</h1>';
-		echo '<h3>'.$res2[0]['description'].'</h3>';
-		echo '<span class="idreserve">'.'debut: '.substr($res2[0]['debut'],10).'</span>';
-		echo '<span class="idreserve">'.'fin: '.substr($res2[0]['fin'],10).'</span>';
+		$iduser=$res2[0]['id_utilisateur'];
+		$quest3=" SELECT login FROM utilisateurs WHERE id = '$iduser' ";
+		$req3=mysqli_query($conn,$quest3);
+		$res3=mysqli_fetch_row($req3);
+		echo '<span id="usertitle"><h2>'.$res3[0].'</h2></span>';
+		echo '<span><h1>'.$res2[0]['titre'].'</h1></span>';
+		echo '<span><h3>'.$res2[0]['description'].'</span></h3>';
+		echo '<span class="idreserve">'.'<i>debut: '.substr($res2[0]['debut'],10).'</i></span>';
+		echo '<span class="idreserve">'.'<i>fin: '.substr($res2[0]['fin'],10).'</i></span>';
+		echo '
+				<form action="" method="post">
+					<button type="submit" class="edits2" name="edit" value="edit"><i>edit </i></button>
+				</form>';
 
-	} else { echo 'no reserve id, contact support <a href="https://github.com/Giacomo-DeGrandi">here</a>';}
+	} else { echo 'no';}
 } else { echo '<span>&#160;</span><h2>please, log in to see this event</h2>';
 		 echo '<span>&#160;</span><a href="connexion.php" target="_top"> Log in </a><span>&#160;</span>';
 }
-	/*
-	if(isset($_SESSION['reservation'])){
-		$id=$_SESSION['reservation'];
-		$quest2=" SELECT login FROM utilisateurs WHERE id = '$id' ";
-		$req2=mysqli_query($conn,$quest2);
-		$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
-		var_dump($res2);
-	}
-} else {
-	echo '<h2>please log in to see the event</h2><br/>';
-	echo '<a href="connexion.php" target="_top"> Log in </a>';
-}*/
+
+if(isset($_POST['edit'])){
+	$SESSION['edit']=$_POST['edit'];
+	header('Location: reservation-form');
+}
 
 ?>
-			</table>
 		</div>
 	</main>
 	<footer>

@@ -38,6 +38,37 @@ if(isset($_COOKIE['connected'])){
 			<h1> Hi! Welcome to RoomPlan</h1><br>
 			<br>
 			<h2>Live now from the studio</h2>
+<?php 
+
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'reservationsalles'; 
+
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+
+// TODAY DATE REQUEST_________________________________________________________________________
+
+	$date=date('Y-m-d H:i:s');
+	$date=substr($date, 0, -5);
+	$date=$date.'00:00';		// $date=substr(date('Y-m-d H:i:s'), 0, -5).'00:00';
+	$questlive= "SELECT id, titre, description, debut, id_utilisateur FROM reservations WHERE debut = '$date'";
+	$req=mysqli_query($conn,$questlive);
+	$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+
+	foreach($res as $k =>$v ){
+						echo '<div class="scrolldiv2pro">';
+						echo '<form action="reservation.php" method="GET">';
+						echo '<button type="submit" class="subid" name="id" value="'.$v['id'].'"><br/>';
+						echo '<span> '.substr($v['titre'],0,10).'...';'</span><br/>';
+						echo '<span> '.$v['description'].'</span>';
+						echo '</button>';
+						echo '</form>';
+						echo '</div>';
+	}
+
+?>
 			<a href="inscription.php" target="_top">SIGN UP </a> 
 			<br><br>
 			<a href="connexion.php" target="_top">LOG IN</a>

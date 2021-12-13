@@ -134,9 +134,11 @@ h2 {
 
 #plantable h2 {
 	padding: 0.5vh;
+		background-color: var(--bittered);
 }
 
 .plantabletitles {
+
 	font-size: 0.7em;
 	padding: 0.1vh;
 	line-height: 0.5em;
@@ -151,6 +153,10 @@ h2 {
 #plantable th {
 	padding: 3vh;
 	white-space: nowrap;
+}
+
+#usertitle{
+	font-size: 1.5em;
 }
 
 #bkgtable {
@@ -220,19 +226,31 @@ footer {
 	align-items: center;
 	box-shadow: var(--cardshad);
 	max-width: 100%;
-		padding: 3vh;
+	padding: 3vh;
 }
 
 #reserdiv h3 {
 	width: 70vh;
-}
-
-#reserdiv table {
+	background-color: var(--bkgborder);
+		color: var(--white);
+	border: solid 1px var(--bkgborder);
+	box-shadow: var(--cardshad);
+	text-align: justify;
 	padding: 3vh;
 }
 
+
 .idreserve{
-	background-color: var(--slateblu);
+	background-color: var(--orange);
+	color: var(--white);
+	border-radius: 3vh;
+	box-shadow: var(--cardshad);
+	padding: 0.4vh;
+
+}
+
+.idreserveg{
+	background-color: var(--greeny);
 	color: var(--white);
 	border-radius: 3vh;
 	box-shadow: var(--cardshad);
@@ -311,6 +329,7 @@ footer {
 
 #wrapper1 {
 	display: flex;
+		border: solid 2px var(--black);
 }
 
 #dateinfo {
@@ -397,10 +416,10 @@ font-family: var(--generalfont);
 }
 #boxreserve {
 	background-color: var(--bkgborder);
-	border-radius: 1vh;
+	border: solid 1px black;
 	flex: 5;
 	overflow: scroll;
-	height: 30vh;
+	height: 35vh;
 	-ms-overflow-style: none;  /* IE and Edge */
   	scrollbar-width: none;  /* Firefox */
 }
@@ -429,6 +448,7 @@ font-family: var(--generalfont);
 }
 
 #wrapper2 {
+	border: solid 2px var(--bkgborder);
 	display: flex;
 }
 
@@ -440,6 +460,31 @@ font-family: var(--generalfont);
 	color: var(--white);
 	background-color: var(--rose);
 	border-radius: 3vh;
+	box-shadow: var(--cardshad);
+}
+
+.edits2 {
+	text-align: center;
+	padding:0.4em ;
+	font-size: 0.8em;
+	border: none;
+	color: var(--white);
+	background-color: var(--rose);
+	border-radius: 3vh;
+	margin-left: 3vh;
+	margin-top: 3vh;
+	box-shadow: var(--cardshad);
+}
+
+.edits1 {
+	text-align: center;
+	padding:0.3em ;
+	font-size: 0.8em;
+	border: none;
+	color: var(--white);
+	background-color: var(--rose);
+	border-radius: 3vh;
+	margin-left: 3vh;
 	box-shadow: var(--cardshad);
 }
 .editsgreen {
@@ -491,4 +536,31 @@ font-family: var(--generalfont);
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+}
+
+/* MESSAGES TABLE */
+
+#receivedtable h3 {
+	color: var(--slateblu);
+	line-height: 0.5em;
+}
+
+#receivedtable h4 {
+	color: var(--colblu);
+}
+
+.subtitles {
+	margin-left: 5vh;
+	padding: 0.3em;
+	font-size: 1.2em;
+	border-radius: 2vh;
+	box-shadow: var(--cardshad);
+	font-weight: 700;
+	color: var(--white);
+	background-color: var(--bkgborder);
+	z-index: 1000;
+}
+
+.whitetext {
+	color: var(--white);
 }

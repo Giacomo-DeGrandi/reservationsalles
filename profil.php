@@ -7,7 +7,7 @@ ini_set('session.use_strict_mode', 1);
 ini_set('session.cookie_httponly', 1);
 ini_set('session.cookie_secure', 0);
 ini_set('session.use_trans_sid', 0);
-//ini_set('session.cache_limiter', 'private_no_expire');
+//ini_set('session.cache_limiter', 'private_no_expire'); cause bug
 ini_set('session.hash_function', 'sha256');
 
 session_start();
@@ -120,7 +120,7 @@ if(isset($_POST['closeedit'])){
 					<button class="settingsbutton" name="messagebutton"><h3>&#160;&#160;💬&#160;&#160;&#160;&#160;send message</h3></button>
 				</form><br>
 <?php 
-// SEND MESSAGES__________________________________________________________
+// SEND MESSAGES__________________________________________________________ j'aurais voulu essayer de les crypter mais je suis pas assez vite pour le deadline de la consigne
 
 if(isset($_POST['messagebutton'])){
 
@@ -198,7 +198,7 @@ if(isset($_POST['bookbutton'])){
 				</tr>
 <?php 
 
-// BOOKING TABLE_________________________________________________________________________-
+// BOOKING TABLE_________________________________________________________________________
 
 $id=$_COOKIE['id'];
 $quest= "SELECT id, titre, description, debut, id_utilisateur FROM reservations WHERE id_utilisateur = '$id'";
@@ -210,7 +210,7 @@ if(!empty($res)){
 		echo '<tr>';
 		foreach($v as $k2 => $v2){
 			if($k2 === 'id'){
-				echo '<td><form action="" method="post"><button type="submit" class="edits" name="idbookingsprofile" value="'.$v2.'">&#160;edit</button></form></td>';
+				echo '<td><form action="reservation.php" method="get"><button type="submit" class="edits1" name="idbookingsprofile" value="'.$v2.'">&#160;see</button></form></td>';
 			} elseif ($k2 === 'title'){
 				echo '<td><div class="scrolldiv"><h3>'.$v2.'&#160;&#160;&#160;&#160;</h3></div></td>';
 			} else {
@@ -220,6 +220,9 @@ if(!empty($res)){
 		echo '</tr>';
 	}
 }
+if(isset($_GET['idbookingsprofile'])){
+	$_SESSION['reservation']=$_GET['idbookingsprofile'];
+}
 
 ?>			
 			</table>
@@ -227,9 +230,14 @@ if(!empty($res)){
 	</div>
 	<div id="wrapper2">
 		<div id="boxreserve2">
+			<span><br></span>
+			<span class="subtitles">latest messages received</span>
 			<table id="receivedtable">
 			<tr>
-				<th>latest messages received </th>
+				<th>&#160;&#160;&#160;&#160;title &#160;&#160;&#160;&#160;</th>
+				<th>message</th>
+				<th>date</th>
+				<th><i>FROM &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</i></th>
 			</tr>
 <?php 
 
@@ -249,12 +257,16 @@ if(!empty($res)){
 				$questnamer="SELECT login FROM utilisateurs WHERE id = '$iduser1'"; // quest for login user 2
 				$reqnamer=mysqli_query($conn,$questnamer);
 				$resnamer=mysqli_fetch_row($reqnamer);
-				echo '<td>'. $resnamer[0].'</td>';
+				echo '<td><h3>'. $resnamer[0].'</h3></td>';
 
 			}	elseif( $k2 === 'id'){
 				
-			}	else {
-				echo '<td><div class="scrolldiv">'.$v2.'</div></td>';
+			}	elseif ($k2 === 'title') {
+				echo '<td><div class="scrolldiv"><h4>'.$v2.'</h4></div></td>';
+			} elseif($k2 === 'text') {
+				echo '<td><div class="whitetext">'.$v2.'</div></td>';
+			} else {
+				echo '<td><div class="whitetext"><i>'.$v2.'</i></div></td>';
 			}
 		}
 		echo '</tr>';
@@ -268,7 +280,58 @@ if(!empty($res)){
 		</div>
 	</div> <!-- wrapper -->
 	<div id="wrapper2">
-		<div style=" background-color: var(--bittered);" id="dateinfo">
+		<div id="boxreserve2">
+			<span><br></span>
+			<span class="subtitles">latest messages sent</span>
+			<table id="receivedtable">
+			<tr>
+				<th>&#160;&#160;&#160;&#160;title &#160;&#160;&#160;&#160;</th>
+				<th>message</th>
+				<th>date</th>
+				<th><i>TO &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</i></th>
+			</tr>
+<?php 
+
+// SENT TABLE____________________________________________________________________________________
+
+$user2x=$_COOKIE['id'];
+$quest= "SELECT id, title, text, date, user2 FROM sent WHERE user1 = '$user2x'";
+$req=mysqli_query($conn,$quest);
+$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+
+if(!empty($res)){
+	foreach($res as $k => $v){
+		echo '<tr>';
+		foreach($v as $k2 => $v2){
+			if($k2 === 'user2'){
+				$iduser2=$v2;
+				$questnames="SELECT login FROM utilisateurs WHERE id = '$iduser2'"; // quest for login user 2
+				$reqnames=mysqli_query($conn,$questnames);
+				$resnames=mysqli_fetch_row($reqnames);
+				echo '<td>'. $resnames[0].'</td>';
+
+			}	elseif( $k2 === 'id'){
+
+			}	elseif ($k2 === 'title') {
+				echo '<td><div class="scrolldiv"><h4>'.$v2.'</h4></div></td>';
+			} elseif($k2 === 'text') {
+				echo '<td><div class="scrolldiv"><div class="whitetext">'.$v2.'</div></div></td>';
+			} elseif($k2 === 'date') {
+				echo '<td><div class="scrolldiv"><div class="whitetext"><i>'.$v2.'</i></div></div></td>';
+			} elseif($k2 === 'user2') {
+				echo '<td><div class="scrolldiv"><h3>'.$v2.'</h3></div></td>';
+			}
+		}
+		echo '</tr>';
+	}
+} else {
+	echo '<tr><th>You haven\'t sent any message yet </th><tr>';
+}
+
+?>
+			</table>
+		</div>
+		<div style=" background-color: var(--bittered); border:solid 1px black; padding:0.5em;" id="dateinfo">
 			<br><br><h2>Live now from the studio:</h2>
 <?php 
 // TODAY DATE REQUEST_________________________________________________________________________
@@ -293,47 +356,6 @@ if(!empty($res)){
 
 ?>
 		</div>
-		<span id="space">
-		</span>
-		<div id="boxreserve2">
-			<table id="receivedtable">
-			<tr>
-				<th>latest messages sent </th>
-			</tr>
-<?php 
-
-// SENT TABLE____________________________________________________________________________________
-
-$user2x=$_COOKIE['id'];
-$quest= "SELECT id, title, text, date, user2 FROM sent WHERE user1 = '$user2x'";
-$req=mysqli_query($conn,$quest);
-$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
-
-if(!empty($res)){
-	foreach($res as $k => $v){
-		echo '<tr>';
-		foreach($v as $k2 => $v2){
-			if($k2 === 'user2'){
-				$iduser2=$v2;
-				$questnames="SELECT login FROM utilisateurs WHERE id = '$iduser2'"; // quest for login user 2
-				$reqnames=mysqli_query($conn,$questnames);
-				$resnames=mysqli_fetch_row($reqnames);
-				echo '<td>'. $resnames[0].'</td>';
-
-			}	elseif( $k2 === 'id'){
-
-			}	else {
-				echo '<td><div class="scrolldiv">'.$v2.'</div></td>';
-			}
-		}
-		echo '</tr>';
-	}
-} else {
-	echo '<tr><th>You haven\'t sent any message yet </th><tr>';
-}
-
-?>
-			</table>
 	</div>
 </main>
 	<footer>
