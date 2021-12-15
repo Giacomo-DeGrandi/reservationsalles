@@ -72,7 +72,6 @@ if(isset($_POST['calendar'])){
 		$jdate= date('d',strtotime($cal));				//my table start values
 		$gdate= date('d',strtotime($cal.'-3 days'));
 		$mdate= date('m',strtotime($cal));
-		echo ' gdate '.$gdate;
 	}
 } else {
 	$cal= 'today';
