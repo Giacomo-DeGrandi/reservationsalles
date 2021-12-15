@@ -75,6 +75,11 @@ if(isset($_COOKIE['connected'])){
 		echo '	<form action="" method="post">
 					<button type="submit" class="edits2" name="edit" value="'.$idres.'"><b>edit &#160;</b></button>
 				</form>';
+				if(isset($_POST['edit'])){
+					$_SESSION['edit']=$_POST['edit'];
+					$_SESSION['datetime']=$res2[0]['debut'];
+					header('Location: reservation-form');
+				}
 		} else {
 			echo '<a href="profil.php"><i>send a message to user</i></a>';
 		}
@@ -82,11 +87,6 @@ if(isset($_COOKIE['connected'])){
 	} else { echo 'no';}
 } else { echo '<span>&#160;</span><h2>please, log in to see this event</h2>';
 		 echo '<span>&#160;</span><a href="connexion.php" target="_top"> Log in </a><span>&#160;</span>';
-}
-
-if(isset($_POST['edit'])){
-	$_SESSION['edit']=$_POST['edit'];
-	header('Location: reservation-form');
 }
 
 ?>

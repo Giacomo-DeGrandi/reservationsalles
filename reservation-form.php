@@ -46,10 +46,6 @@ if(!isset($_COOKIE['connected'])){		//if for any weird reason the user pass here
 	header('Location: connexion.php');
 }
 
-if(isset($_SESSION['datetime'])){
-	echo $_SESSION['datetime'].' ';
-	echo date('Y-m-d');
-}
 
 ?>	
 			<form action="" method="post">
@@ -142,10 +138,11 @@ if(isset($_SESSION['edit'])){
 	$quest= "SELECT id, titre, description, debut FROM reservations WHERE id = '$idres'";
 	$req=mysqli_query($conn,$quest);
 	$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
-	echo '<span class="messagespan">old date for the event: <h2>'.substr($res[0]['debut'],0,10).'</h2></span><br>';
-	echo '<input type="date" name="dateform"><br>';
+	$datetime=$res[0]['debut'];
+	echo '<input type="date" name="dateform" value="'.substr($datetime,0,-9).'"><br>';
 } elseif (isset($_SESSION['datetime'])) {
-	echo '<input type="date" name="dateform" value="'.substr($_SESSION['datetime'],0,-9).'"><br>';
+	$datetime=$_SESSION['datetime'];
+	echo '<input type="date" name="dateform" value="'.substr($datetime,0,-9).'"><br>';
 } else {
 	echo '<input type="date" name="dateform"><br>';
 }
@@ -159,10 +156,10 @@ if(isset($_SESSION['edit'])){
 	$quest= "SELECT id, titre, description, debut FROM reservations WHERE id = '$idres'";
 	$req=mysqli_query($conn,$quest);
 	$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
-	echo '<span class="messagespan">old time for the event: <h2>'.substr($res[0]['debut'],10).'</h2></span><br>';
-	echo '<input type="time" name="time">';
+	$datetime=$res[0]['debut'];
+	echo '<input type="time" name="time" value="'.substr($res[0]['debut'],11).'">';
 } 	elseif(isset($_SESSION['datetime'])){
-	echo $_SESSION['datetime'];
+	//echo $_SESSION['datetime'];
 	$datetime=$_SESSION['datetime'];
 	$pattern = '/[-]/i';
 	$replacement = '/';
@@ -207,7 +204,6 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 			$quest=" SELECT * FROM reservations WHERE debut = '$debut' AND id_utilisateur = '$user' ";
 			$req= mysqli_query($conn,$quest);
 			$res= mysqli_fetch_row($req);
-			var_dump($res);
 			$fin = ((int)$time + 1).':00';
 			$fin= $date.' '.$fin;
 			$questformbook="UPDATE reservations SET titre = '$title',description='$description',debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE debut = '$debut' AND id_utilisateur = '$user' ";

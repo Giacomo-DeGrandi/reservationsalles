@@ -68,13 +68,7 @@ echo '<h4>go to date:</h4><form action="" method="post"><input type="date" name=
 
 if(isset($_POST['calendar'])){
 	if(isset($_POST['searchdate'])){
-		//$date = $datealias; //create an alias 
 		$cal= $_POST['calendar'];
-	/*	$pattern = '/[-]/i';
-		$replacement = '/';
-		$dayss= preg_replace($pattern, $replacement, $cal);
-		echo $dayss;
-		$cal= $dayss.' 00:00:00';*/
 		$jdate= date('d',strtotime($cal));				//my table start values
 		$gdate= date('d',strtotime($cal.'-3 days'));
 		$mdate= date('m',strtotime($cal));
