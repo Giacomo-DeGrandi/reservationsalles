@@ -28,7 +28,13 @@ body {
 	font-family: var(--generalfont);
 	background-color: var(--bittered);
 	color: var(--yellored);
+	-ms-overflow-style: none;  /* IE and Edge */
+  	scrollbar-width: none;  /* Firefox */
 }
+body::-webkit-scrollbar {
+  display: none;
+}
+
 
 header {
 	display: flex;
@@ -38,9 +44,9 @@ header {
 }
 
 header a{
-	margin-left: 2vh;
 	color: var(--rose);
 	margin-left: 8vh;
+	margin-right: 10vh;
 }
 
 a {

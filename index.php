@@ -31,6 +31,15 @@ if(isset($_COOKIE['connected'])){
 	echo '<a href="profil.php" target="_top">Go to your profile</a>';
 
 } 
+
+if(isset($_POST['disconnect'])){
+	$logincookie=$_COOKIE['connected'];
+	$idcookie=$_COOKIE['id'];
+	setcookie('id',$idcookie,time() -3600);
+	setcookie('connected',$logincookie,time() -3600);
+	session_destroy();
+	header('Location: planning.php');
+}
 ?>
 	</header>
 	<main id='index'>	
@@ -46,7 +55,7 @@ if(isset($_COOKIE['connected'])){
 			<br><br><br><br>
 		</div>
 		<div id="indextablediv">
-			<h2>Live now from the studio</h2>
+			<h1>Today planning</h1>
 <?php 
 
 $servername = 'localhost';
@@ -93,7 +102,7 @@ echo '<table id="todaytable">';
 		echo '<td><h2>'.$res2[0]['titre'].'</h2></td>';	
 		echo '</tr>';	
 		} else {
-		echo '<td><a href="connexion.php">book</a></td>';
+		echo '<td><a href="planning.php">book</a></td>';
 		echo '</tr>';
 		}
 	}

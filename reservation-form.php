@@ -39,6 +39,7 @@ if(isset($_POST['disconnect'])){
 	$idcookie=$_COOKIE['id'];
 	setcookie('id',$idcookie,time() -3600);
 	setcookie('connected',$logincookie,time() -3600);
+	session_destroy();
 	header('Location: planning.php');
 }
 
