@@ -30,7 +30,7 @@ if(isset($_COOKIE['connected'])){
 			</form>';
 	echo '<a href="profil.php" target="_top">Go to your profile</a>';
 
-}
+} 
 ?>
 	</header>
 	<main id='index'>	

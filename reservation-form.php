@@ -159,7 +159,7 @@ if(isset($_SESSION['edit'])){
 	$datetime=$res[0]['debut'];
 	echo '<input type="time" name="time" value="'.substr($res[0]['debut'],11).'">';
 } 	elseif(isset($_SESSION['datetime'])){
-	//echo $_SESSION['datetime'];
+	//echo  $_SESSION['datetime'];
 	$datetime=$_SESSION['datetime'];
 	$pattern = '/[-]/i';
 	$replacement = '/';

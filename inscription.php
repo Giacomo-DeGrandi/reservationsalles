@@ -10,7 +10,7 @@ ini_set('session.use_trans_sid', 0);
 ini_set('session.hash_function', 'sha256');
 
 session_start();
-					//My securities for session hijacking
+					//My securities for session  hijacking
 
 ?>
 <!DOCTYPE html>

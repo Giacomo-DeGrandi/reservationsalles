@@ -278,7 +278,7 @@ if(!empty($res)){
 } else {
 	echo '<tr><th>There are no messages here</th><tr>';
 }
-
+ 
 ?>
 			</table>
 		</div>

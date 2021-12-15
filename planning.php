@@ -147,7 +147,7 @@ for($i=0;$i<=11;$i++){
 					if(isset($_POST['addreserve'])){		// ADD RESERVE___________________________________________
 						$datey= $_POST['addreserve'];			// my coords
 						$_SESSION['datetime']=$datey;
-						header('location: reservation-form.php');
+						header('location: reservation-form.php'); 
 					}
 
 			} else {

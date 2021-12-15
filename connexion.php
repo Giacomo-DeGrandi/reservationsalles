@@ -11,7 +11,7 @@ ini_set('session.hash_function', 'sha256');
 
 session_start();
 //	My security for session hijacking
-//	 GET my session var to display reservation
+//	 GET my session var to display reservation 
 if(isset($_GET['id'])){	
 	$_SESSION['reservation']=$_GET['id'];
 }
