@@ -79,7 +79,7 @@ if(isset($_COOKIE['connected'])){
 				if(isset($_POST['edit'])){
 					$_SESSION['edit']=$_POST['edit'];
 					$_SESSION['datetime']=$res2[0]['debut'];
-					header('Location: reservation-form');
+					header('Location: reservation-form.php');
 				}
 		} else {
 			echo '<a href="profil.php"><i>send a message to user</i></a>';
