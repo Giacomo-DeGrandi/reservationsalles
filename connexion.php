@@ -25,6 +25,17 @@ if(isset($_GET['id'])){
 	<link rel="stylesheet" type="text/css" href="reservationsalles.css">
 </head>
 <body>
+<header>
+<?php 
+
+	if(isset($_COOKIE['connected'])){
+	echo 	'<form action=""	method="post" >
+				<input type="submit" name="disconnect" id="disconnect" value="disconnect">
+			</form>';
+	echo '<a href="profil.php" target="_top">Go to your profile</a>';
+}
+?>
+</header>
 <main class="maininsc">
 	<div class="inscform">
 	<h1>Log In</h1>

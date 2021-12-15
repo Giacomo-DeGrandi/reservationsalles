@@ -210,11 +210,15 @@ if(!empty($res)){
 		echo '<tr>';
 		foreach($v as $k2 => $v2){
 			if($k2 === 'id'){
-				echo '<td><form action="reservation.php" method="get"><button type="submit" class="edits1" name="idbookingsprofile" value="'.$v2.'">&#160;see</button></form></td>';
-			} elseif ($k2 === 'title'){
-				echo '<td><div class="scrolldiv"><h3>'.$v2.'&#160;&#160;&#160;&#160;</h3></div></td>';
+				echo '<td><form action="reservation.php" method="get"><button type="submit" class="edits1" name="idbookingsprofile" value="'.$v2.'">&#160; see &#160;</button></form></td>';
+			}	elseif ($k2 === 'titre') {
+				echo '<td><div class="scrolldiv"><h4>'.$v2.'</h4></div></td>';
+			} elseif ($k2 === 'description') {
+				echo '<td><div class="scrolldiv"><div class="whitetext">'.$v2.'</div></div></td>';
+			} elseif ($k2 === 'debut') {
+				echo '<td><div class="whitetext"><i>'.$v2.'&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</i></div></td>';
 			} else {
-				echo '<td><div class="scrolldiv">'.$v2.'&#160;&#160;&#160;&#160;</div></td>';
+				echo '<td><div class="messagespan">'.$v2.'</div></td>';
 			}
 		}
 		echo '</tr>';
@@ -244,7 +248,7 @@ if(isset($_GET['idbookingsprofile'])){
 // RECEIVED TABLE____________________________________________________________________________________
 
 $user2x=$_COOKIE['id'];
-$quest= "SELECT id, title, text, date, user1 FROM sent WHERE user2 = '$user2x'";
+$quest= "SELECT id, title, text, date, user1 FROM sent WHERE user2 = '$user2x' ORDER BY date DESC";
 $req=mysqli_query($conn,$quest);
 $res=mysqli_fetch_all($req,MYSQLI_ASSOC);
 
@@ -295,7 +299,7 @@ if(!empty($res)){
 // SENT TABLE____________________________________________________________________________________
 
 $user2x=$_COOKIE['id'];
-$quest= "SELECT id, title, text, date, user2 FROM sent WHERE user1 = '$user2x'";
+$quest= "SELECT id, title, text, date, user2 FROM sent WHERE user1 = '$user2x' ORDER BY date DESC";
 $req=mysqli_query($conn,$quest);
 $res=mysqli_fetch_all($req,MYSQLI_ASSOC);
 

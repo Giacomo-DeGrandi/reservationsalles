@@ -37,6 +37,15 @@ if(isset($_COOKIE['connected'])){
 		<div id="indextitles">
 			<h1> Hi! Welcome to RoomPlan</h1><br>
 			<br>
+			<br>
+			<a href="inscription.php" target="_top">SIGN UP </a> 
+			<br><br>
+			<a href="connexion.php" target="_top">LOG IN</a>
+			<br><br>
+			<a href="planning.php" target="_top"> go to the planning </a>
+			<br><br><br><br>
+		</div>
+		<div id="indextablediv">
 			<h2>Live now from the studio</h2>
 <?php 
 
@@ -68,13 +77,29 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 						echo '</div>';
 	}
 
-?>
-			<a href="inscription.php" target="_top">SIGN UP </a> 
-			<br><br>
-			<a href="connexion.php" target="_top">LOG IN</a>
-			<br><br>
-			<a href="planning.php" target="_top"> go to the planning </a>
-			<br><br><br><br>
+// today table
+echo '<table id="todaytable">';
+
+	for($i=0;$i<=11;$i++){
+		echo '<tr>';
+		$date2=date('Y-m-d H:i:s');
+		$date2=substr($date2, 0, -9);
+		$date2=$date2.' 0'.($i+8).':00:00';
+		$questlive2= "SELECT * FROM reservations WHERE debut = '$date2'";
+		$req2= mysqli_query($conn,$questlive2);
+		$res2= mysqli_fetch_all($req2,MYSQLI_ASSOC);
+		echo '<td><h4>'.($i+8).'h</h4></td>';
+		if(!empty($res2)){
+		echo '<td><h2>'.$res2[0]['titre'].'</h2></td>';	
+		echo '</tr>';	
+		} else {
+		echo '<td><a href="connexion.php">book</a></td>';
+		echo '</tr>';
+		}
+	}
+
+?>	
+			</table>
 		</div>
 	</main>
 	<footer>

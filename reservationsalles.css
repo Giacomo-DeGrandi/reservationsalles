@@ -94,6 +94,16 @@ h2 {
 	line-height: 0.4em;
 }
 
+.subid2 button[type='submit'] {
+	background-color: var(--bittered);
+	text-decoration: none;
+	border-radius: 4vh;
+	padding: 0.8vh;
+	color: var(--rose);
+	box-shadow: var(--cardshad);
+	text-align: center;
+}
+
 #today {
 	background-color: var(--rose);
 	color: var(--white);
@@ -271,6 +281,24 @@ footer {
 	color: var(--bittered);
 }
 
+.closedit2 {
+	font-size: 1em;
+	background-color: var(--bittered);
+	text-decoration: none;
+	border: none;
+	border-radius: 4vh;
+	padding: 0.8vh;
+	color: var(--rose);
+	box-shadow: var(--cardshad);
+	text-align: center;
+}
+
+.closedit2:hover {
+		background-color: var(--middleblu);
+		color: var(--bittered);
+		transition: 0.5s;
+}
+
 /* INSCRIPTION */
 
 .inscform {
@@ -312,6 +340,13 @@ footer {
 }
 .scrolldiv2pro::-webkit-scrollbar {
   display: none;
+}
+
+.scrolldiv h3 {
+	padding: 0;
+	font-size: 0.8em;
+	line-height: 0.2em;
+	color: var(--middleblu);
 }
 
 #profilmain h1 {
@@ -558,9 +593,29 @@ font-family: var(--generalfont);
 	font-weight: 700;
 	color: var(--white);
 	background-color: var(--bkgborder);
-	z-index: 1000;
 }
 
 .whitetext {
 	color: var(--white);
 }
+
+/* INDEX */
+
+#todaytable {
+		box-shadow: var(--cardshad);
+}
+#todaytable td {
+	width: 45vh;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+	text-align: center;
+
+} 
+
+#indextablediv {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+

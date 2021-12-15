@@ -71,10 +71,13 @@ if(isset($_COOKIE['connected'])){
 		echo '<span><h3>'.$res2[0]['description'].'</span></h3>';
 		echo '<span class="idreserve">'.'<i>debut: '.substr($res2[0]['debut'],10).'</i></span>';
 		echo '<span class="idreserve">'.'<i>fin: '.substr($res2[0]['fin'],10).'</i></span>';
-		echo '
-				<form action="" method="post">
-					<button type="submit" class="edits2" name="edit" value="edit"><i>edit </i></button>
+		if($res2[0]['id_utilisateur']===$_COOKIE['id']){
+		echo '	<form action="" method="post">
+					<button type="submit" class="edits2" name="edit" value="'.$idres.'"><b>edit &#160;</b></button>
 				</form>';
+		} else {
+			echo '<a href="profil.php"><i>send a message to user</i></a>';
+		}
 
 	} else { echo 'no';}
 } else { echo '<span>&#160;</span><h2>please, log in to see this event</h2>';
@@ -82,7 +85,7 @@ if(isset($_COOKIE['connected'])){
 }
 
 if(isset($_POST['edit'])){
-	$SESSION['edit']=$_POST['edit'];
+	$_SESSION['edit']=$_POST['edit'];
 	header('Location: reservation-form');
 }
 

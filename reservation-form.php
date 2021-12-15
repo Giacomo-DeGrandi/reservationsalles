@@ -41,24 +41,50 @@ if(isset($_POST['disconnect'])){
 	setcookie('connected',$logincookie,time() -3600);
 	header('Location: planning.php');
 }
+
+if(!isset($_COOKIE['connected'])){		//if for any weird reason the user pass here without cookies, i send him/her to log in
+	header('Location: connexion.php');
+}
+
+if(isset($_SESSION['datetime'])){
+	echo $_SESSION['datetime'].' ';
+	echo date('Y-m-d');
+}
+
 ?>	
-			<a href="planning.php" target="_top"> go to the planning </a><br><br>
-			<a href="index.php" target="_top">go back to the home page </a><br><br>
+			<form action="" method="post">
+							<button class="closedit2" name="gobacktoplan">go to the planning</button>
+			</form><br>
+			<form action="" method="post">
+							<button class="closedit2" name="gobackhome">go to the home page</button>
+			</form><br>
 <?php
+
+if(isset($_POST['gobacktoplan'])){
+	session_destroy();
+	header('Location:planning.php');
+}
+if(isset($_POST['gobackhome'])){
+	session_destroy();
+	header('Location:index.php');
+}
+
 if(isset($_COOKIE['connected'])){
 	echo '<form action="" method="post">
 				<input type="submit" name="disconnect" id="disconnect" value="disconnect">
 			</form>';
-	echo '<a href="profil.php" target="_top">Go to your profile</a>';
+	echo '<form action="" method="post">
+				<button class="closedit2" name="gobackaccount">go to your profil</button>
+			</form><br>';
 
 } else { 
 	header('location:connexion.php');   
 }
 
-if(isset($_SESSION['edit'])){
-	
+if(isset($_POST['gobackaccount'])){
+	session_destroy();
+	header('Location:profil.php');
 }
-
 
 ?>
 	</header>
@@ -66,15 +92,87 @@ if(isset($_SESSION['edit'])){
 		<div id="reserdiv">
 <div id="dateinfo3">
 					<form action="" method="post">
-						<span><h1>Book an event</h1></span>
-						<span><i>title</i>&#160;&#160;&#160;<i>max 30 characters</i></span>
-						<textarea rows="1" cols="20" name="title" placeholder="write here the title of your message..." ></textarea><br>
-						<span class="messagespan"><b>description </b>&#160;&#160;&#160;<i>max 500 characters</i></span>
-						<textarea rows="4" cols="40" name="descriptionform" placeholder="write here the description..." ></textarea><br>
+<?php 
+
+
+if(isset($_SESSION['edit'])){
+	$idres=$_SESSION['edit'];
+	$quest= "SELECT id, titre, description, debut FROM reservations WHERE id = '$idres'";
+	$req=mysqli_query($conn,$quest);
+	$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+	echo '<span><h1>Edit an existing event</h1></span>';
+} else {
+	echo '<span><h1>Book an event</h1></span>';
+}
+
+
+?>
+			<span><i>title</i>&#160;&#160;&#160;<i>max 30 characters</i></span>
+<?php
+
+if(isset($_SESSION['edit'])){
+	$idres=$_SESSION['edit'];
+	$quest= "SELECT id, titre, description, debut FROM reservations WHERE id = '$idres'";
+	$req=mysqli_query($conn,$quest);
+	$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+	echo '<textarea rows="1" cols="20" name="title" placeholder="'.$res[0]['titre'].'" ></textarea><br>';
+} else {
+	echo '<textarea rows="1" cols="20" name="title" placeholder="write here the title of your message..." ></textarea><br>';
+}
+?>
+		<span class="messagespan"><b>description </b>&#160;&#160;&#160;<i>max 500 characters</i></span>
+<?php
+
+if(isset($_SESSION['edit'])){
+	$idres=$_SESSION['edit'];
+	$quest= "SELECT id, titre, description, debut FROM reservations WHERE id = '$idres'";
+	$req=mysqli_query($conn,$quest);
+	$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+	echo '<textarea rows="4" cols="40" name="descriptionform" placeholder="'.$res[0]['description'].'" ></textarea><br>';
+} else {
+	echo '<textarea rows="4" cols="40" name="descriptionform" placeholder="write here the description..." ></textarea><br>';
+}
+
+?>
 						<span class="messagespan"><i>choose a date</i></span>
-						<input type="date" name="dateform"><br>
+<?php
+
+if(isset($_SESSION['edit'])){
+	$idres=$_SESSION['edit'];
+	$quest= "SELECT id, titre, description, debut FROM reservations WHERE id = '$idres'";
+	$req=mysqli_query($conn,$quest);
+	$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+	echo '<span class="messagespan">old date for the event: <h2>'.substr($res[0]['debut'],0,10).'</h2></span><br>';
+	echo '<input type="date" name="dateform"><br>';
+} elseif (isset($_SESSION['datetime'])) {
+	echo '<input type="date" name="dateform" value="'.substr($_SESSION['datetime'],0,-9).'"><br>';
+} else {
+	echo '<input type="date" name="dateform"><br>';
+}
+?>
+
 						<span class="messagespan"><b>choose a time </b>&#160;&#160;&#160;<i>*max booking 1h from 8am to 7pm</i></span>
-						<input type="time" name="time">
+<?php 
+
+if(isset($_SESSION['edit'])){
+	$idres=$_SESSION['edit'];
+	$quest= "SELECT id, titre, description, debut FROM reservations WHERE id = '$idres'";
+	$req=mysqli_query($conn,$quest);
+	$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+	echo '<span class="messagespan">old time for the event: <h2>'.substr($res[0]['debut'],10).'</h2></span><br>';
+	echo '<input type="time" name="time">';
+} 	elseif(isset($_SESSION['datetime'])){
+	echo $_SESSION['datetime'];
+	$datetime=$_SESSION['datetime'];
+	$pattern = '/[-]/i';
+	$replacement = '/';
+	$datetime= preg_replace($pattern, $replacement, $datetime);
+	echo '<input type="time" name="time" value="'.substr($_SESSION['datetime'],11).'"><br>'; // add slashes to convert
+}	else {
+	echo '<input type="time" name="time">';
+}
+
+?>
 						<span><br></span>
 						<input type="submit" class="idreserveg" name="send_form" value="book"><br><br>
 					</form>
@@ -85,9 +183,11 @@ if(isset($_SESSION['edit'])){
 
 <?php
 
-if(!isset($_COOKIE['connected'])){
-	header('Location: connexion.php');
+if(isset($_POST['closeedit2'])){
+	unset($_SESSION['edit']);
+	header('Location:profil.php');
 }
+
 
 if(	(isset($_POST['title']) and !empty($_POST['title'])) and 
 	(isset($_POST['descriptionform']) and !empty($_POST['descriptionform'])) and 
@@ -103,17 +203,32 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 		$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
 		$req= mysqli_query($conn,$quest);
 		$res= mysqli_fetch_row($req);
-		if(!empty($res)){
-			echo '<span><h4> This hour has already been booked, please choose another hour</h4></span>';
-		} else {
+		if(isset($_SESSION['edit'])){
+			$quest=" SELECT * FROM reservations WHERE debut = '$debut' AND id_utilisateur = '$user' ";
+			$req= mysqli_query($conn,$quest);
+			$res= mysqli_fetch_row($req);
+			var_dump($res);
 			$fin = ((int)$time + 1).':00';
 			$fin= $date.' '.$fin;
-			$questformbook="INSERT INTO reservations (titre,description,debut,fin,id_utilisateur) VALUES ('$title','$description','$debut','$fin','$user')";
+			$questformbook="UPDATE reservations SET titre = '$title',description='$description',debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE debut = '$debut' AND id_utilisateur = '$user' ";
 			$reqsend= mysqli_query($conn,$questformbook);
+
+			session_destroy();
 			header('location:planning.php');
+		} else {
+		if(!empty($res)){
+			echo '<span><h4> This hour has already been booked, please choose another hour</h4></span>';
+			} else {
+				$fin = ((int)$time + 1).':00';
+				$fin= $date.' '.$fin;
+				$questformbook="INSERT INTO reservations (titre,description,debut,fin,id_utilisateur) VALUES ('$title','$description','$debut','$fin','$user')";
+				$reqsend= mysqli_query($conn,$questformbook);
+				session_destroy();		
+				header('location:planning.php');
+			}
 		}
 	}
-}
+} else { echo '<span class="messagespan"><h7><i>*please fill in all the fields to validate the form<i><h7></span>';}
 
 ?>
 				</div>

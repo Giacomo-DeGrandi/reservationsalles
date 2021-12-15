@@ -70,18 +70,20 @@ if(isset($_POST['calendar'])){
 	if(isset($_POST['searchdate'])){
 		//$date = $datealias; //create an alias 
 		$cal= $_POST['calendar'];
-		$pattern = '/[-]/i';
+	/*	$pattern = '/[-]/i';
 		$replacement = '/';
 		$dayss= preg_replace($pattern, $replacement, $cal);
-		$cal= $dayss.' 00:00:00';
-		echo $cal.' ';
+		echo $dayss;
+		$cal= $dayss.' 00:00:00';*/
 		$jdate= date('d',strtotime($cal));				//my table start values
-		echo $jdate;
 		$gdate= date('d',strtotime($cal.'-3 days'));
+		$mdate= date('m',strtotime($cal));
+		echo ' gdate '.$gdate;
 	}
 } else {
 	$cal= 'today';
 	$jdate= date('d');
+	$mdate= date('m');
 	$gdate= date('d',strtotime('-3 days'));
 }
 
@@ -105,7 +107,24 @@ echo '<h1>'.$wday.'</h1>';
 				</tr>
 <?php
 
-//function i to date to have $i formatted as H:i:s
+
+
+for($i=0;$i<=11;$i++){
+	echo '<tr>';
+	echo '<td><h2>'.($i+8).'h</h2></td>';
+	for($j=-3;$j<=3;$j++){
+	echo '<td>';
+	$date=date('Y-m-d H:i:s',strtotime($cal.$j.'days'.($i+8).'hours'));
+	echo '</td>';
+	}
+	echo '</tr>';
+}
+
+/*
+
+2021-12-13 17:00:00 	
+
+//function i to date to have $i formatted as H:i:s and starting from 8
 function itoh($i){	
 	$r = $i + 8;
 	if($r<=10){
@@ -131,29 +150,52 @@ function bothdh($j,$i){
 	return $formatdate;
 }
 //var_dump(bothdh(jtod($g),itoh($i)));
-
+			
+	//echo substr(date('d',strtotime($cal)),1);
 
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
 		$j=$jdate;	// NB per cambiare giorno
 		$g=$gdate;
 		$g=ltrim($g,0);				//alias to count
+		//echo $jj;
 		$jj=ltrim($j,0);
 		//echo $jj.' ';
-		if($jj==1){
-			$g=-2;
+		//echo '!'.$g.'! ';
+		//echo $g;/*
+		/*if($jj==1){		// when arrived at $jj=1 $g is 28 so the condition for the loop it's not met 
+			$$g= 28;
+			$g= -2;
+			//echo $g;
 		} elseif ($jj==2){
 			$g=-1;
 		} elseif ($jj==3){
 			$g=0;
 		}
-		for($jj=ltrim($j,0);$g<=$jj+4;$g++){
+		echo $g;
+		echo $jj;
+		if(($g==28 || $g==29) and $jj==1){
+			$g=-2;
+		}
+		if(($g==29 || $g==30) and $jj==2){
+			$g=-1;
+		}
+		if(($g==29 || $g==31) and $jj==3){
+			$g=0;
+		}
+		if($g==31 and $jj==4){
+			$g=1;
+		}
+		for($jj;$g<=$jj+4;$g++){
 			echo '<td>';
+			//echo 'jj '.$jj.'-';
+			//echo $g.' ';
+			//echo $jj;
 			if($g==$jj-3){
-				echo '&#160;&#160;&#160;';
-				echo $i+8;
+				echo '<span>'.($i+8).'</span>';
 				echo 'h';
 			} else {
+				//echo $jj;
 				$debut=bothdh(jtod($g,$cal),itoh($i));
 				$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
 				$req=mysqli_query($conn,$quest);
@@ -175,14 +217,54 @@ for($i=0;$i<=11;$i++){
 						echo '</div>';
 
 						if(isset($_GET['idbookingsprofile'])){
-						$idreserve=$_GET['idbookingsprofile'];
+							$idreserve=$_GET['idbookingsprofile'];
 							$_SESSION['reservation']=$_GET['idbookingsprofile'];
+							if(isset($_SESSION['edit'])){
+							unset($_SESSION['edit']);
+							}
+							if(isset($_SESSION['datetime'])){
+							unset($_SESSION['datetime']);
+							}
 						}
 
 					}
 				} else {
 					if(isset($_COOKIE['connected'])){
-						echo '<a href="reservation-form.php">+</a>';
+						echo 	'<form action="" method="post">
+									<button type="submit" class="closedit2" name="addreserve" value="'.($i+8).($g-1).'">+
+									</button>
+								</form>';
+						if(isset($_POST['addreserve'])){		// ADD RESERVE___________________________________________
+							$datey= $_POST['addreserve'];			// my coords
+							if($datey[0]!=1){
+								$datey='0'.$datey;
+							} 
+							if($jj==1 and $datey=='0831'){
+								$datey=='0801';
+							}
+							if($datey=='0832' and $jj=='1'){
+								$datey=='0801';
+							}
+							//echo $datey;
+							echo $mdate;
+							echo $datey.' ';
+							echo $jj.' ';
+							echo ($g-1).' ';
+							$datey = implode(' ', str_split($datey, 2));
+							if(strlen($datey)<5){
+								$datey = substr_replace($datey, '0', 3, 0);
+							}
+							//var_dump($datey);
+							//echo $datey;
+							//$hour= $hour.':00:00';
+
+							//$date=date('Y-m-').$day.' ';
+							//echo $date;
+							//$datetime=$date.$hour;
+							//$_SESSION['datetime']=$datetime;
+							//echo $datetime;
+							//header('location: reservation-form.php');
+						}
 					} else {
 						echo '<a href="connexion.php">+</a>';
 					}
@@ -192,6 +274,8 @@ for($i=0;$i<=11;$i++){
 		}
 	echo '</tr>';
 }
+
+*/
 
 ?>
 			</table>
