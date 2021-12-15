@@ -71,7 +71,7 @@ if(isset($_COOKIE['connected'])){
 				<input type="submit" name="disconnect" id="disconnect" value="disconnect">
 			</form>';
 	echo '<form action="" method="post">
-				<button class="closedit2" name="gobackaccount">go to your profil</button>
+				<button class="closedit2" name="gobackaccount">go to your profile</button>
 			</form><br>';
 
 } else { 
