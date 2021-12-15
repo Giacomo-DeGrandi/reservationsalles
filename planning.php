@@ -111,11 +111,56 @@ echo '<h1>'.$wday.'</h1>';
 
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
-	echo '<td><h2>'.($i+8).'h</h2></td>';
+	echo '<td>'.($i+8).'h</td>';
 	for($j=-3;$j<=3;$j++){
-	echo '<td>';
-	$date=date('Y-m-d H:i:s',strtotime($cal.$j.'days'.($i+8).'hours'));
-	echo '</td>';
+		echo '<td>';
+		$date=date('Y-m-d H:i:s',strtotime($cal.$j.'days'.($i+8).'hours'));
+		$quest=" SELECT * FROM reservations WHERE debut = '$date' ";
+		$req=mysqli_query($conn,$quest);
+		$res=mysqli_fetch_all($req,MYSQLI_ASSOC);
+		if(!empty($res)){
+			foreach($res as $k => $v){
+				$id=$v['id_utilisateur'];
+				$quest2=" SELECT login FROM utilisateurs WHERE id = '$id' ";
+				$req2=mysqli_query($conn,$quest2);
+				$res2=mysqli_fetch_all($req2,MYSQLI_ASSOC);
+				echo '<div class="scrolldiv1">';
+				echo '<form action="reservation.php" method="GET">';
+				echo '<button type="submit" class="subid" name="idbookingsprofile" value="'.$v['id'].'"><br/>';
+				echo '<span id="plantabletitles1">'.$res2[0]['login'].'</span><br/>';
+				echo '<span class="plantabletitles"> '.substr($v['titre'],0,10).'...';'</span>';
+				echo '<span class="plantabletitles"> '.$v['description'].'</span>';
+				echo '</button>';
+				echo '</form>';
+				echo '</div>';
+				if(isset($_GET['idbookingsprofile'])){
+					$idreserve=$_GET['idbookingsprofile'];
+					$_SESSION['reservation']=$_GET['idbookingsprofile'];
+					if(isset($_SESSION['edit'])){
+					unset($_SESSION['edit']);
+					}
+					if(isset($_SESSION['datetime'])){
+					unset($_SESSION['datetime']);
+					}
+				}
+			}
+		}else{
+			if(isset($_COOKIE['connected'])){
+				echo '<form action="" method="post">
+						<button type="submit" class="closedit2" name="addreserve" value="'.$date.'"> +
+						</button>
+					</form>';
+					if(isset($_POST['addreserve'])){		// ADD RESERVE___________________________________________
+						$datey= $_POST['addreserve'];			// my coords
+						$_SESSION['datetime']=$datey;
+						header('location: reservation-form.php');
+					}
+
+			} else {
+				echo '<a href="connexion.php">+</a>';
+			}
+		}
+		echo '</td>';
 	}
 	echo '</tr>';
 }
