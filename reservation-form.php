@@ -202,6 +202,7 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 		$req= mysqli_query($conn,$quest);
 		$res= mysqli_fetch_row($req);
 		if(isset($_SESSION['edit'])){
+			echo $debut;
 			$quest=" SELECT * FROM reservations WHERE debut = '$debut' AND id_utilisateur = '$user' ";
 			$req= mysqli_query($conn,$quest);
 			$res= mysqli_fetch_row($req);
@@ -210,7 +211,7 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 			$questformbook="UPDATE reservations SET titre = '$title',description='$description',debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE debut = '$debut' AND id_utilisateur = '$user' ";
 			$reqsend= mysqli_query($conn,$questformbook);
 
-			session_destroy();
+			//session_destroy();
 			header('location:planning.php');
 		} else {
 		if(!empty($res)){
@@ -220,7 +221,7 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 				$fin= $date.' '.$fin;
 				$questformbook="INSERT INTO reservations (titre,description,debut,fin,id_utilisateur) VALUES ('$title','$description','$debut','$fin','$user')";
 				$reqsend= mysqli_query($conn,$questformbook);
-				session_destroy();		
+				//session_destroy();		
 				header('location:planning.php');
 			}
 		}
