@@ -12,7 +12,6 @@ ini_set('session.hash_function', 'sha256');
 
 session_start();
 
-
 $servername = 'localhost:3306';
 $username = 'giditree';
 $password = 'admin.io';
