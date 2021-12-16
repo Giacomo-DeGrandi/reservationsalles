@@ -67,11 +67,11 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 ?>
 		<div class="downlinks">
 			<br><br><br><br>
-			<a href="index.php" target="_top">go to the home page </a>
+			<a class="formsconnsub" href="index.php" target="_top">go to the home page </a>
 			<br><br>
-			<a href="connexion.php" target="_top">Already Signed Up? Log in </a>
+			<a class="formsconnsub" href="connexion.php" target="_top">Already Signed Up? Log in </a>
 			<br><br>
-			<a href="planning.php" target="_top"> go to the planning </a>
+			<a class="formsconnsub" href="planning.php" target="_top"> go to the planning </a>
 			<br><br>
 		</div>
 	</div>

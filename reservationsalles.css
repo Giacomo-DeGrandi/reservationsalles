@@ -59,6 +59,21 @@ a {
 	text-align: center;
 }
 
+.formsconnsub {
+	background-color: var(--bkgborder);
+	text-decoration: none;
+	border-radius: 4vh;
+	padding: 0.8vh;
+	color: var(--white);
+	box-shadow: var(--cardshad);
+	text-align: center;
+}
+
+.formsconnsub:hover {
+		background-color: var(--white);
+		color: var(--bittered);
+}
+
 input {
 	text-decoration: none;
 	background-color: var(--white);
