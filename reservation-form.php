@@ -216,7 +216,7 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 				session_destroy();
 				header('location:planning.php');
 			} elseif (!empty($resdeb)){
-				echo '<span><h4> This hour has already been booked,<br> please choose another hour</h4></span>';
+				echo '<span><i> This hour has already been booked,<br> please choose another hour</i></span>';
 
 			}
 		}
