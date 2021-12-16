@@ -7,10 +7,11 @@ ini_set('session.use_strict_mode', 1);
 ini_set('session.cookie_httponly', 1);
 ini_set('session.cookie_secure', 0);
 ini_set('session.use_trans_sid', 0);
-//ini_set('session.cache_limiter', 'private_no_expire'); cause bug
+ini_set('session.cache_limiter', 'private_no_expire'); 
 ini_set('session.hash_function', 'sha256');
 
 session_start();
+
 
 $servername = 'localhost:3306';
 $username = 'giditree';
@@ -87,7 +88,31 @@ if(isset($_POST['settings'])){
 				<form action="" method="post">
 					<button class="closedit" name="closeedit">close edits</button>
 				</form><br>
+				<span class="messagespan"><i>delete your account</i></span><br>
+				<form action="" method="post">
+					<button class="closedit" name="delete">delete your account</button>
+				</form><br>
 			</div>';
+}
+if(isset($_POST['delete'])){
+	echo '	<span class="messagespan"><i>Are you sure??<br>All your bookings and your profile<br> will be deleted forever.<br>Continue?</i></span><br>
+				<form action="" method="post">
+					<button class="closedit" name="deletechoice">DELETE ⚠️</button>
+				</form><br>';
+}
+
+if(isset($_POST['deletechoice'])){
+	$idres=$_COOKIE['id'];
+	$questreserve="DELETE FROM reservations WHERE id_utilisateur = '$idres' ";
+	$req=mysqli_query($conn,$questreserve);
+	$questdel="DELETE FROM utilisateurs WHERE id = '$idres' ";
+	$reqdel=mysqli_query($conn,$questdel);
+	$questmes="DELETE FROM sent WHERE user1 = '$idres' ";
+	$reqmes=mysqli_query($conn,$questmes);
+	setcookie('id',$idcookie,time() -3600);
+	setcookie('connected',$logincookie,time() -3600);
+	session_destroy();
+	header('location:index.php');
 }
 
 if( ((isset($_POST['username']) and ($_POST['username']) != '')) and

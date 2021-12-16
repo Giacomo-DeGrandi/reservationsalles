@@ -523,10 +523,27 @@ font-family: var(--generalfont);
 	font-size: 0.8em;
 	border: none;
 	color: var(--white);
-	background-color: var(--rose);
+	background-color: var(--slateblu);
 	border-radius: 3vh;
 	margin-left: 3vh;
 	box-shadow: var(--cardshad);
+}
+
+.delete {
+	margin-top: 3.25vh;
+	text-align: center;
+	padding:0.3em ;
+	font-size: 0.8em;
+	border: none;
+	color: var(--white);
+	background-color: var(--red);
+	border-radius: 3vh;
+	margin-left: 3vh;
+	box-shadow: var(--cardshad);
+}
+
+#wrapdel{
+	display: flex;
 }
 .editsgreen {
 	text-align: center;

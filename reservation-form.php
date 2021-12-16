@@ -1,6 +1,6 @@
 <?php
 
-ini_set('session.cookie_lifetime', 0);		//Spécifie la durée de vie du cookie en secondes. La valeur de 0 signifie : "Jusqu'à ce que le navigateur soit éteint". La valeur par défaut est : 0 
+ini_set('session.cookie_lifetime', 0);	
 ini_set('session.use_cookies', 1);
 ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);

@@ -57,7 +57,6 @@ if(isset($_POST['disconnect'])){
 		<div id="indextablediv">
 			<h1>Today planning</h1>
 <?php 
-
 $servername = 'localhost:3306';
 $username = 'giditree';
 $password = 'admin.io';

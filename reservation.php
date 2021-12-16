@@ -73,7 +73,7 @@ if(isset($_COOKIE['connected'])){
 		echo '<span class="idreserve">'.'<i>debut: '.substr($res2[0]['debut'],10).'</i></span>';
 		echo '<span class="idreserve">'.'<i>fin: '.substr($res2[0]['fin'],10).'</i></span>';
 		if($res2[0]['id_utilisateur']===$_COOKIE['id']){
-		echo '	<form action="" method="post">
+		echo '	<div id="wrapdel"><form action="" method="post">
 					<button type="submit" class="edits2" name="edit" value="'.$idres.'"><b>edit &#160;</b></button>
 				</form>';
 				if(isset($_POST['edit'])){
@@ -81,11 +81,23 @@ if(isset($_COOKIE['connected'])){
 					$_SESSION['datetime']=$res2[0]['debut'];
 					header('Location: reservation-form.php');
 				}
+		echo '	<form action="" method="post">
+					<button type="submit" class="delete" name="delete" value="'.$idres.'"><b>delete &#160;</b></button>
+				</form></div>';
+				if(isset($_POST['delete'])){
+					$idres=$_POST['delete'];
+					echo $idres;
+					$quest="DELETE FROM reservations WHERE id = '$idres' ";
+					$req=mysqli_query($conn,$quest);
+					header('location: reservation.php');
+				}
+
 		} else {
 			echo '<a href="profil.php"><i>send a message to user</i></a>';
 		}
 
-	} else { echo 'no';}
+	} else { 	header('location:planning.php');	// DELETED
+	}
 } else { echo '<span>&#160;</span><h2>please, log in to see this event</h2>';
 		 echo '<span>&#160;</span><a href="connexion.php" target="_top"> Log in </a><span>&#160;</span>';
 }
