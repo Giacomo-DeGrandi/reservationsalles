@@ -338,6 +338,7 @@ footer {
 }
 
 .inscform h1{
+	margin-right: 3vh;
 	color: var(--colblu);
 
 }
