@@ -323,6 +323,7 @@ footer {
 /* INSCRIPTION */
 
 .inscform {
+	text-align: center;
 	width: 40vh;
 	max-width: 100%;
 	padding: 3vh;
