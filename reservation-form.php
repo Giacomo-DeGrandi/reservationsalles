@@ -217,7 +217,6 @@ if(isset($_SESSION['edit'])){
 
 				$questformbook="UPDATE reservations SET titre = '$title',description='$description',debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE debut = '$debut' AND id_utilisateur = '$user' ";
 				$reqsend= mysqli_query($conn,$questformbook);
-
 				session_destroy();
 				header('location:planning.php');
 			}
