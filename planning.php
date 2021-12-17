@@ -48,8 +48,8 @@ if(isset($_COOKIE['connected'])){
 if(isset($_POST['disconnect'])){
 	$logincookie=$_COOKIE['connected'];
 	$idcookie=$_COOKIE['id'];
-	setcookie('id',$idcookie,time() -3600);
-	setcookie('connected',$logincookie,time() -3600);
+	setcookie('id',$idcookie,time() -3600, '/reservationsalles');
+	setcookie('connected',$logincookie,time() -3600, '/reservationsalles');
 	session_destroy();
 	header('Location: planning.php');
 }
