@@ -60,10 +60,15 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 		$quest = "SELECT login, password, id FROM utilisateurs WHERE login = '$login' ";
 		$req=mysqli_query($conn,$quest);
 		$res=mysqli_fetch_row($req);
-
+		$id = $res[2];
+		if(isset($_COOKIE['id']) and isset($_COOKIE['connected'])){
+			$idc=$_COOKIE['id'];
+			$loginc=$_COOKIE['connected'];
+			setcookie('id',$idc ,time() -3600);
+			setcookie('connected',$loginc ,time() -3600);
+		}
 		if($res > 0){
 			if(password_verify($_POST['password'], $res[1])){
-
 				$id = $res[2];
 				setcookie('id',$id ,time() +3600);
 				setcookie('connected',$login ,time() +3600);
