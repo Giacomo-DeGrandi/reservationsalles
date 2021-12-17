@@ -201,7 +201,7 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 		$title=mysqli_real_escape_string($conn,htmlspecialchars($_POST['title']));
 		$description=mysqli_real_escape_string($conn,htmlspecialchars($_POST['descriptionform']));
 		$date=$_POST['dateform'];
-		if($date<date('Y-m-d H:i:s')){
+		if($date<date('Y-m-d H:i:s',strtotime('-1 day'))){
 			echo '<span class="messagespan"><i>you can\'t book a date in the past!<br> Choose another time please.</i></span>';
 		} else { 
 			if(isset($_SESSION['edit'])){
