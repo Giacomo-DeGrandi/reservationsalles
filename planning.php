@@ -6,7 +6,7 @@ ini_set('session.use_strict_mode', 1);
 ini_set('session.cookie_httponly', 1);
 ini_set('session.cookie_secure', 0);
 ini_set('session.use_trans_sid', 0);
-//ini_set('session.cache_limiter', 'private_no_expire');
+//ini_set('session.cache_limiter', 'private_no_expire'); 
 ini_set('session.hash_function', 'sha256');
 
 session_start();
@@ -72,14 +72,14 @@ if(isset($_POST['calendar'])){
 	if(isset($_POST['searchdate'])){
 		$cal= $_POST['calendar'];
 		$jdate= date('d',strtotime($cal));				//my table start values
-		$gdate= date('d',strtotime($cal.'-3 days'));
+		$gdate= date('d',strtotime($cal.'-2 days'));
 		$mdate= date('m',strtotime($cal));
 	}
 } else {
 	$cal= 'today';
 	$jdate= date('d');
 	$mdate= date('m');
-	$gdate= date('d',strtotime('-3 days'));
+	$gdate= date('d',strtotime('-2 days'));
 }
 
 // TODAY
@@ -92,13 +92,13 @@ echo '<h1>'.$wday.'</h1>';
 			<table id="plantable">
 				<tr>
 					<th>&#160;&#160;&#160;&#160;&#160;</th>
-					<th><?php   echo '<h2>'.date('l d',strtotime($cal .'-3 days')).'</h2>' ?></th>
-					<th><?php   echo '<h2>'.date('l d',strtotime($cal .'-2 days')).'</h2>'  ?></th>
-					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'-1 days')).'</h2>'  ?></th>
+					<th><?php   echo '<h2>'.date('l d',strtotime($cal .'-2 days')).'</h2>' ?></th>
+					<th><?php   echo '<h2>'.date('l d',strtotime($cal .'-1 days')).'</h2>'  ?></th>
 					<th><?php 	echo '<h2><span id="today">'.date('l d',strtotime($cal)).'</span></h2>' ; ?></th>		<!--  today date -->
 					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'+1 days')).'</h2>'  ?></th>
 					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'+2 days')).'</h2>'  ?></th>	
 					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'+3 days')).'</h2>'  ?></th>
+					<th><?php 	echo '<h2>'.date('l d',strtotime($cal .'+4 days')).'</h2>'  ?></th>
 				</tr>
 <?php
 
@@ -107,7 +107,7 @@ echo '<h1>'.$wday.'</h1>';
 for($i=0;$i<=11;$i++){
 	echo '<tr>';
 	echo '<td>'.($i+8).'h</td>';
-	for($j=-3;$j<=3;$j++){
+	for($j=-2;$j<=4;$j++){
 		echo '<td>';
 		$date=date('Y-m-d H:i:s',strtotime($cal.$j.'days'.($i+8).'hours'));
 		$quest=" SELECT * FROM reservations WHERE debut = '$date' ";
@@ -141,7 +141,9 @@ for($i=0;$i<=11;$i++){
 			}
 		}else{
 			if(isset($_COOKIE['connected'])){
-				echo '<form action="" method="post">
+				if($date<date('Y-m-d H:i:s')){
+				} else {
+					echo '<form action="" method="post">
 						<button type="submit" class="closedit2" name="addreserve" value="'.$date.'"> +
 						</button>
 					</form>';
@@ -150,9 +152,12 @@ for($i=0;$i<=11;$i++){
 						$_SESSION['datetime']=$datey;
 						header('location: reservation-form.php'); 
 					}
-
+				}
 			} else {
+				if($date<date('Y-m-d H:i:s')){
+				} else {
 				echo '<a href="connexion.php">+</a>';
+				}
 			}
 		}
 		echo '</td>';

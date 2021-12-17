@@ -6,7 +6,7 @@ ini_set('session.use_strict_mode', 1);
 ini_set('session.cookie_httponly', 1);
 ini_set('session.cookie_secure', 0);
 ini_set('session.use_trans_sid', 0);
-//ini_set('session.cache_limiter', 'private_no_expire');
+//ini_set('session.cache_limiter', 'private_no_expire'); 
 ini_set('session.hash_function', 'sha256');
 
 session_start();

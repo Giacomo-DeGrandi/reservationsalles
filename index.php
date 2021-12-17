@@ -66,7 +66,7 @@ $database = 'carlo-de-grandi-giacomo_reservationsalles';
 $conn = mysqli_connect($servername, $username, $password, $database);
 
 
-// TODAY DATE REQUEST_________________________________________________________________________
+// TODAY DATE REQUEST_________________________________________________________________________ 
 
 	$date=date('Y-m-d H:i:s');
 	$date=substr($date, 0, -5);
