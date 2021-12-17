@@ -15,7 +15,12 @@ session_start();
 $servername = 'localhost:3306';
 $username = 'giditree';
 $password = 'admin.io';
-$database = 'carlo-de-grandi-giacomo_reservationsalles';*/  
+$database = 'carlo-de-grandi-giacomo_reservationsalles';
+
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'reservationsalles';*/  
 
 $servername = 'localhost:3306';
 $username = 'giditree';
@@ -196,53 +201,58 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 		$title=mysqli_real_escape_string($conn,htmlspecialchars($_POST['title']));
 		$description=mysqli_real_escape_string($conn,htmlspecialchars($_POST['descriptionform']));
 		$date=$_POST['dateform'];
-	if(isset($_SESSION['edit'])){
-		if(isset($_POST['send_form'])){ 
-			$time=substr($_POST['time'],0,-3).':00';
-			$debut= $date.' '.$time;
-			$questdeb=" SELECT * FROM reservations WHERE debut = '$debut' ";
-			$reqdeb= mysqli_query($conn,$questdeb);
-			$resdeb= mysqli_fetch_row($reqdeb);
-			$fin = ((int)$time + 1).':00:00';
-			$fin= $date.' '.$fin;
-			if(!empty($resdeb) and $resdeb[5] === $user){
-				$newidres=$resdeb[0];
-				$questreplace="UPDATE reservations SET titre = '$title', description='$description', debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE id = '$newidres' ";
-				$ressend= mysqli_query($conn,$questreplace);
-				$questdelold="DELETE FROM reservations WHERE id = '$idres' ";
-				$resdelold= mysqli_query($conn,$questdelold);
-				session_destroy();
-				header('location:planning.php');
-			} elseif (empty($resdeb))	{
-				$questformbook="UPDATE reservations SET titre = '$title', description='$description', debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE id = '$idres' AND id_utilisateur = '$user' ";
-				$ressend= mysqli_query($conn,$questformbook);
-				session_destroy();
-				header('location:planning.php');
-			} elseif (!empty($resdeb)){
-				echo '<span><i> This hour has already been booked,<br> please choose another hour</i></span>';
+		if($date<date('Y-m-d H:i:s')){
+			echo '<span class="messagespan"><i>you can\'t book a date in the past!<br> Choose another time please.</i></span>';
+		} else { 
+			if(isset($_SESSION['edit'])){
+				if(isset($_POST['send_form'])){ 
+					$time=substr($_POST['time'],0,-3).':00';
+					$debut= $date.' '.$time;
+					$questdeb=" SELECT * FROM reservations WHERE debut = '$debut' ";
+					$reqdeb= mysqli_query($conn,$questdeb);
+					$resdeb= mysqli_fetch_row($reqdeb);
+					$fin = ((int)$time + 1).':00:00';
+					$fin= $date.' '.$fin;
+					if(!empty($resdeb) and $resdeb[5] === $user){
+						$newidres=$resdeb[0];
+						$questreplace="UPDATE reservations SET titre = '$title', description='$description', debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE id = '$newidres' ";
+						$ressend= mysqli_query($conn,$questreplace);
+						$questdelold="DELETE FROM reservations WHERE id = '$idres' ";
+						$resdelold= mysqli_query($conn,$questdelold);
+						session_destroy();
+						header('location:planning.php');
+					} elseif (empty($resdeb))	{
+						$questformbook="UPDATE reservations SET titre = '$title', description='$description', debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE id = '$idres' AND id_utilisateur = '$user' ";
+						$ressend= mysqli_query($conn,$questformbook);
+						session_destroy();
+						header('location:planning.php');
+					} elseif (!empty($resdeb)){
+						echo '<span><i> This hour has already been booked,<br> please choose another hour</i></span>';
+					}
+				}
+			} else  {
+				if(isset($_POST['send_form'])){ 
+					$time=substr($_POST['time'],0,-3).':00';
+					$debut= $date.' '.$time;
+					$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
+					$req= mysqli_query($conn,$quest);
+					$res= mysqli_fetch_row($req);
+						if(!empty($res)){
+							echo '<span><h4> This hour has already been booked, please choose another hour</h4></span>';
+						} else {
+								$fin = ((int)$time + 1).':00';
+								$fin= $date.' '.$fin;
+								$questformbook="INSERT INTO reservations (titre,description,debut,fin,id_utilisateur) VALUES ('$title','$description','$debut','$fin','$user')";
+								$reqsend= mysqli_query($conn,$questformbook);
+								session_destroy();		
+								header('location:planning.php');
+						}
+				}
 			}
 		}
-	} else  {
-		if(isset($_POST['send_form'])){ 
-			$time=substr($_POST['time'],0,-3).':00';
-			$debut= $date.' '.$time;
-			$quest=" SELECT * FROM reservations WHERE debut = '$debut' ";
-			$req= mysqli_query($conn,$quest);
-			$res= mysqli_fetch_row($req);
-				if(!empty($res)){
-					echo '<span><h4> This hour has already been booked, please choose another hour</h4></span>';
-					} else {
-						$fin = ((int)$time + 1).':00';
-						$fin= $date.' '.$fin;
-						$questformbook="INSERT INTO reservations (titre,description,debut,fin,id_utilisateur) VALUES ('$title','$description','$debut','$fin','$user')";
-						$reqsend= mysqli_query($conn,$questformbook);
-						session_destroy();		
-						header('location:planning.php');
-					}
-		}
-	} 
-} else { echo '<span class="messagespan"><h7><i>*please fill in all the fields to validate the form<i><h7></span>';
-	}
+} else { 
+	echo '<span class="messagespan"><h7><i>*please fill in all the fields to validate the form<i><h7></span>';
+}
 
 
 if(isset($_POST['closeedit2'])){

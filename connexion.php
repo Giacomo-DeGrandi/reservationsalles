@@ -49,7 +49,7 @@ if(isset($_GET['id'])){
 $servername = 'localhost:3306';
 $username = 'giditree';
 $password = 'admin.io';
-$database = 'carlo-de-grandi-giacomo_reservationsalles'; 
+$database = 'carlo-de-grandi-giacomo_reservationsalles';
 
 $conn = mysqli_connect($servername, $username, $password, $database);
 
