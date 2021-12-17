@@ -84,7 +84,7 @@ if(isset($_POST['calendar'])){
 
 // TODAY
 
-$wday = date('l d',strtotime($cal));	//day of the week
+$wday = date('l d F Y',strtotime($cal));	//day of the week
 echo '<h1>'.$wday.'</h1>';
 
 ?>
