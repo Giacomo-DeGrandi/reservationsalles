@@ -29,11 +29,9 @@ if(isset($_GET['id'])){
 <?php 
 
 	if(isset($_COOKIE['connected'])){
-	echo 	'<form action=""	method="post" >
-				<input type="submit" name="disconnect" id="disconnect" value="disconnect">
-			</form>';
-	echo '<a href="profil.php" target="_top">Go to your profile</a>';
+	header('location:planning.php');
 }
+
 ?>
 </header>
 <main class="maininsc">
@@ -53,6 +51,7 @@ $database = 'carlo-de-grandi-giacomo_reservationsalles';
 
 $conn = mysqli_connect($servername, $username, $password, $database);
 
+
 	if(	(isset($_POST['login']) and !empty($_POST['login'])) and 
 		(isset($_POST['password']) and !empty($_POST['password'])) ){ 
 
@@ -60,13 +59,6 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 		$quest = "SELECT login, password, id FROM utilisateurs WHERE login = '$login' ";
 		$req=mysqli_query($conn,$quest);
 		$res=mysqli_fetch_row($req);
-		$id = $res[2];
-		if(isset($_COOKIE['id']) and isset($_COOKIE['connected'])){
-			$idc=$_COOKIE['id'];
-			$loginc=$_COOKIE['connected'];
-			setcookie('id',$idc ,time() -3600);
-			setcookie('connected',$loginc ,time() -3600);
-		}
 		if($res > 0){
 			if(password_verify($_POST['password'], $res[1])){
 				$id = $res[2];
