@@ -205,9 +205,12 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 			$resdeb= mysqli_fetch_row($reqdeb);
 			$fin = ((int)$time + 1).':00:00';
 			$fin= $date.' '.$fin;
-			if(!empty($resdeb) and $resdeb[3] === $debut){
-				$questformbook="UPDATE reservations SET titre = '$title', description='$description', debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE id = '$idres'";
-				$reqsend= mysqli_query($conn,$questformbook);
+			if(!empty($resdeb) and $resdeb[5] === $user){
+				$newidres=$resdeb[0];
+				$questreplace="UPDATE reservations SET titre = '$title', description='$description', debut = '$debut',fin= '$fin',id_utilisateur= '$user' WHERE id = '$newidres' ";
+				$ressend= mysqli_query($conn,$questreplace);
+				$questdelold="DELETE FROM reservations WHERE id = '$idres' ";
+				$resdelold= mysqli_query($conn,$questdelold);
 				session_destroy();
 				header('location:planning.php');
 			} elseif (empty($resdeb))	{
@@ -217,7 +220,6 @@ if(	(isset($_POST['title']) and !empty($_POST['title'])) and
 				header('location:planning.php');
 			} elseif (!empty($resdeb)){
 				echo '<span><i> This hour has already been booked,<br> please choose another hour</i></span>';
-
 			}
 		}
 	} else  {

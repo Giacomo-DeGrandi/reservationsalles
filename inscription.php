@@ -32,10 +32,12 @@ session_start();
 			<input type="submit" name="subscribe" value="subscribe">
 		</form>
 <?php 
+
 $servername = 'localhost:3306';
 $username = 'giditree';
 $password = 'admin.io';
 $database = 'carlo-de-grandi-giacomo_reservationsalles';
+
 $conn = mysqli_connect($servername, $username, $password, $database);
 
 	if(	(isset($_POST['login']) and !empty($_POST['login'])) and 
